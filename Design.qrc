@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>design/Design.qml</file>
+        <file>design/qmldir</file>
+    </qresource>
+</RCC>

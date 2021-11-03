@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>CommonItems/ConnectionBox.qml</file>
+        <file>CommonItems/ControlMessageBox.qml</file>
+        <file>CommonItems/InformationBox.qml</file>
+        <file>CommonItems/MessagesBox.qml</file>
+        <file>CommonItems/MonitoringMessageBox.qml</file>
+        <file>CommonItems/qmldir</file>
+    </qresource>
+</RCC>

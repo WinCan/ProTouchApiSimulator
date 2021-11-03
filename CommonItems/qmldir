@@ -1,0 +1,6 @@
+module CommonItems
+ConnectionBox 1.0 ConnectionBox.qml
+ControlMessageBox 1.0 ControlMessageBox.qml
+InformationBox 1.0 InformationBox.qml
+MessagesBox 1.0 MessagesBox.qml
+MonitoringMessageBox 1.0 MonitoringMessageBox.qml
