@@ -39,6 +39,13 @@ public:
     Q_INVOKABLE void updateMsgStatus(bool status);
     Q_INVOKABLE void updateErrorDsc(const QString& description);
 
+    Q_INVOKABLE void sendCreateFreeText(const QString& text,
+                                        int x,
+                                        int y,
+                                        int visibleTime,
+                                        const QString& textColor,
+                                        const QString& backColor);
+
     inline bool connected() { return m_isConnected; }
 
     inline bool ignoreMessage() { return m_ignoreMessage; }

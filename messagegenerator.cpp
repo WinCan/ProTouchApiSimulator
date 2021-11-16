@@ -127,6 +127,23 @@ void MessageGenerator::sendObjectValue(const QString& obj, const QString& val)
 
     m_client->sendMessage(createMessage(createHeader(OBJECT_STATUS_IND, MONITORING, MESSAGE_ID), createPayload(obj, val)));
 }
+void MessageGenerator::sendCreateFreeText(const QString& text,
+                                        int x,
+                                        int y,
+                                        int visibleTime,
+                                        const QString& textColor,
+                                        const QString& backColor)
+{
+    QVariantMap payload{{
+        {"text", text},
+        {"x", x},
+            {"y", y},
+            {"visible", visibleTime},
+            {"textColor", textColor},
+            {"backColor", backColor}
+    }};
+    m_client->sendMessage(createMessage(createHeader("CREATE_FREE_TEXT", "OSD", MESSAGE_ID), QJsonObject::fromVariantMap(payload)));
+}
 
 QByteArray MessageGenerator::createMessage(const QJsonObject& header, const QJsonObject& payload)
 {

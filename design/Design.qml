@@ -53,6 +53,15 @@ QtObject{
         readonly property int borderSize: 2
     }
 
+    property QtObject freeTextBox: QtObject {
+        property color backgroundColor: "lightskyblue"
+        property color borderColor: "grey"
+
+        readonly property int height: 100
+        //readonly property int width:
+        readonly property int borderSize: 2
+    }
+
     property QtObject messagesBox: QtObject {
         property color borderColor: "grey"
 

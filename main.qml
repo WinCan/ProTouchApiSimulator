@@ -11,10 +11,10 @@ import io.qt.MessageGenerator 1.0
 Window {
     visible: true
     width: 1130
-    height: 700
+    height: 800
     title: "Client simulator"
     minimumWidth: 1130
-    minimumHeight: 700
+    minimumHeight: 800
     color: Design.backgroundColor
 
     MessageGenerator {
@@ -98,10 +98,21 @@ Window {
         }
     }
 
+    FreeTextBox {
+        id: freeTextBox
+        anchors.top: connectionBox.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        function createFreeTextAction(text, x, y, visibleTime, textColor, backColor) {
+            msgGen.sendCreateFreeText(text, x, y, visibleTime, textColor, backColor)
+        }
+    }
+
     MessagesBox {
         id: messagesBox
 
-        anchors.top: connectionBox.bottom
+        anchors.top: freeTextBox.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom

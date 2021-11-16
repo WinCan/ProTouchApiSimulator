@@ -6,5 +6,6 @@
         <file>CommonItems/MessagesBox.qml</file>
         <file>CommonItems/MonitoringMessageBox.qml</file>
         <file>CommonItems/qmldir</file>
+        <file>CommonItems/FreeTextBox.qml</file>
     </qresource>
 </RCC>
