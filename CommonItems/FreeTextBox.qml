@@ -6,6 +6,7 @@ import design 1.0
 
 Rectangle {
     id: root
+    property bool connectedToServer
 
     anchors.leftMargin: Design.bigMargin
     anchors.topMargin: Design.bigMargin
@@ -113,6 +114,7 @@ Rectangle {
 
             Button {
                 text: "Send"
+                enabled: connectedToServer
                 onClicked: {
                     root.createFreeTextAction(textFieldInput.text,
                                               xInput.value,

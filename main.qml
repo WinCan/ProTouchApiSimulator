@@ -103,6 +103,7 @@ Window {
         anchors.top: connectionBox.bottom
         anchors.left: parent.left
         anchors.right: parent.right
+        connectedToServer: msgGen.connected
 
         function createFreeTextAction(text, x, y, visibleTime, textColor, backColor) {
             msgGen.sendCreateFreeText(text, x, y, visibleTime, textColor, backColor)
