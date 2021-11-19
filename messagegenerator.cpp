@@ -9,7 +9,7 @@
 
 MessageGenerator::MessageGenerator(QObject *parent) :
     QObject(parent),
-    m_client(std::make_unique<TcpClient>("localhost", 8082))
+    m_client(std::make_unique<TcpClient>("localhost", 8095))
 {
     QObject::connect(m_client.get(), &TcpClient::connected, this, [this]()
     {   m_isConnected = true;
@@ -170,16 +170,26 @@ QJsonObject MessageGenerator::createHeader(const QString& msgName, const QString
 QJsonObject MessageGenerator::createPayload(const QString& val)
 {
     QJsonObject payload;
-    payload.insert("value", QJsonValue::fromVariant(val));
+    payload.insert("value", val.toInt());
     return payload;
 }
 
 QJsonObject MessageGenerator::createPayload(const QString& obj, const QString& val)
 {
     QJsonObject payload;
-    payload.insert("value", QJsonValue::fromVariant(val));
+    payload.insert("value", QJsonValue::fromVariant(getValueForObject(obj.simplified(), val)));
     payload.insert("object", QJsonValue::fromVariant(obj.simplified()));
     return payload;
+}
+
+QVariant MessageGenerator::getValueForObject(const QString& obj, const QString& val)
+{
+    if (obj.contains("spinbox", Qt::CaseInsensitive) ||
+        obj.contains("levelIndicator", Qt::CaseInsensitive))
+        return val.toInt();
+    else if (obj.contains("switch", Qt::CaseInsensitive))
+        return (obj == "true" ? true : false);
+    return  val;
 }
 
 QJsonObject MessageGenerator::createControlRespPayload()
