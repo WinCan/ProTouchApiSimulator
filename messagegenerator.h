@@ -71,6 +71,7 @@ private:
     QJsonObject createHeader(const QString& msgName, const QString& msgType, MessageId messageId);
     QJsonObject createPayload(const QString& obj, const QString& val);
     QJsonObject createPayload(const QString& val);
+    QVariant getValueForObject(const QString& obj, const QString& val);
     QJsonObject createControlRespPayload();
 
     QByteArray createMessage(const QJsonObject& header, const QJsonObject& payload);
