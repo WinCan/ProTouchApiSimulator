@@ -7,7 +7,9 @@
   <param name="branch" value="refs/heads/main" />
   <param name="ignoreKnownHosts" value="true" />
   <param name="submoduleCheckout" value="CHECKOUT" />
-  <param name="teamcity:branchSpec" value="refs/heads/(*)" />
+  <param name="teamcity:branchSpec"><![CDATA[+:refs/heads/(*)
++:refs/(tags/*)
++:refs/pull/(*/merge)]]></param>
   <param name="teamcitySshKey" value="wincan-bbot-vx_rsa" />
   <param name="url" value="git@github.com:WinCan/ProTouchApiSimulator.git" />
   <param name="useAlternates" value="AUTO" />
