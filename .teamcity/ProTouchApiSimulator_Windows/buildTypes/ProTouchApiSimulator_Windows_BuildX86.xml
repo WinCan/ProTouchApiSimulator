@@ -28,7 +28,9 @@ make -j%teamcity.agent.hardware.cpuCount% || exit 1]]></param>
       </runner>
     </build-runners>
     <vcs-settings>
-      <vcs-entry-ref root-id="ProTouchApiSimulator_ProTouchApiSimulator" />
+      <vcs-entry-ref root-id="ProTouchApiSimulator_ProTouchApiSimulator">
+        <checkout-rule rule="+:.=&gt; ProTouchApiSimulator" />
+      </vcs-entry-ref>
     </vcs-settings>
     <requirements />
     <build-triggers />
