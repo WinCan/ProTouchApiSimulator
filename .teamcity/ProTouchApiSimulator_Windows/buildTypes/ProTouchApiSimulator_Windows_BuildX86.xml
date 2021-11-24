@@ -6,7 +6,16 @@
     <parameters>
       <param name="env.Path" value="C:\!tools\python372\;C:\!tools\python372\lib\site-packages;C:\msys2\usr\lib\p7zip;C:\msys2\mingw32\bin;C:\msys2\mingw32\lib;C:\msys2\usr\bin;C:\Windows\System32;C:\Program Files\Git\bin\;" />
     </parameters>
-    <build-runners />
+    <build-runners>
+      <runner id="RUNNER_15" name="check" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[qmake -v
+g++ --version]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="ProTouchApiSimulator_ProTouchApiSimulator" />
     </vcs-settings>
