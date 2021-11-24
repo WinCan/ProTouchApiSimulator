@@ -3,6 +3,9 @@
   <name>build (x86)</name>
   <description />
   <settings>
+    <options>
+      <option name="artifactRules" value="build\release =&gt; build.zip" />
+    </options>
     <parameters>
       <param name="env.Path" value="C:\!tools\python372\;C:\!tools\python372\lib\site-packages;C:\msys2_pt3\usr\lib\p7zip;C:\msys2_pt3\mingw32\bin;C:\msys2_pt3\mingw32\lib;C:\msys2_pt3\usr\bin;C:\Windows\System32;C:\Program Files\Git\bin\;" />
     </parameters>
@@ -50,7 +53,7 @@ make -j%teamcity.agent.hardware.cpuCount% || exit 1]]></param>
           <param name="github_authentication_type" value="token" />
           <param name="github_host" value="https://api.github.com" />
           <param name="publisherId" value="githubStatusPublisher" />
-          <param name="secure:github_access_token" value="56ffcc70-5d73-4152-8922-859c6b45e2f5" />
+          <param name="secure:github_access_token" value="credentialsJSON:56ffcc70-5d73-4152-8922-859c6b45e2f5" />
           <param name="vcsRootId" value="ProTouchApiSimulator_ProTouchApiSimulator" />
         </parameters>
       </extension>
