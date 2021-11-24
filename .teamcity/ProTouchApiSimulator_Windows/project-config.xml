@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" parent-id="ProTouchApiSimulator" uuid="ad1b466f-5085-484d-9a85-f49f8bba7b04" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2021.1/project-config.xsd">
+  <name>Windows</name>
+  <parameters />
+  <cleanup />
+</project>
+
