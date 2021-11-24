@@ -44,6 +44,17 @@ make -j%teamcity.agent.hardware.cpuCount% || exit 1]]></param>
         </parameters>
       </build-trigger>
     </build-triggers>
+    <build-extensions>
+      <extension id="BUILD_EXT_36" type="commit-status-publisher">
+        <parameters>
+          <param name="github_authentication_type" value="token" />
+          <param name="github_host" value="https://api.github.com" />
+          <param name="publisherId" value="githubStatusPublisher" />
+          <param name="secure:github_access_token" value="56ffcc70-5d73-4152-8922-859c6b45e2f5" />
+          <param name="vcsRootId" value="ProTouchApiSimulator_ProTouchApiSimulator" />
+        </parameters>
+      </extension>
+    </build-extensions>
     <cleanup />
   </settings>
 </build-type>
