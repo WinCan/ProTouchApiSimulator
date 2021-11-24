@@ -15,6 +15,17 @@ g++ --version]]></param>
           <param name="use.custom.script" value="true" />
         </parameters>
       </runner>
+      <runner id="RUNNER_16" name="" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[mkdir build 
+cd build 
+
+qmake .. CONFIG+=release "QMAKE_CXX=ccache g++" 
+make -j%teamcity.agent.hardware.cpuCount% || exit 1]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="ProTouchApiSimulator_ProTouchApiSimulator" />
