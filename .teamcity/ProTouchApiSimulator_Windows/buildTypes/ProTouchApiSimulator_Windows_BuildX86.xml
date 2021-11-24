@@ -4,7 +4,7 @@
   <description />
   <settings>
     <parameters>
-      <param name="env.Path" value="C:\!tools\python372\;C:\!tools\python372\lib\site-packages;C:\msys2\usr\lib\p7zip;C:\msys2\mingw32\bin;C:\msys2\mingw32\lib;C:\msys2\usr\bin;C:\Windows\System32;C:\Program Files\Git\bin\;" />
+      <param name="env.Path" value="C:\!tools\python372\;C:\!tools\python372\lib\site-packages;C:\msys2_pt3\usr\lib\p7zip;C:\msys2_pt3\mingw32\bin;C:\msys2_pt3\mingw32\lib;C:\msys2_pt3\usr\bin;C:\Windows\System32;C:\Program Files\Git\bin\;" />
     </parameters>
     <build-runners>
       <runner id="RUNNER_15" name="check" type="simpleRunner">
