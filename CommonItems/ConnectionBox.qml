@@ -50,12 +50,14 @@ Rectangle {
         TextField {
             id: ip
             selectByMouse: true
+            text: "127.0.0.1"
         }
 
         Label { text: "Port:"}
         TextField {
             id: port
             selectByMouse: true
+            text: "8095"
             validator: IntValidator{}
         }
     }
