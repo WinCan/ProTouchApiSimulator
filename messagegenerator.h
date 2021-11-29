@@ -32,7 +32,7 @@ public:
     Q_INVOKABLE void connectToHost(const QString& ip = "127.0.0.1", const QString& port = "8082");
     Q_INVOKABLE void disconnectFromHost();
 
-    Q_INVOKABLE void sendMeterCounterValue(const QString& val);
+    Q_INVOKABLE void sendMeterCounterValue(const QString& val, const QString& unit);
     Q_INVOKABLE void sendObjectValue(const QString& obj, const QString& val);
 
     Q_INVOKABLE void updateErrorCode(int errorCode);
@@ -69,8 +69,8 @@ private:
     void sendControlMessage(const QString& msgName, MessageId msgId);
 
     QJsonObject createHeader(const QString& msgName, const QString& msgType, MessageId messageId);
-    QJsonObject createPayload(const QString& obj, const QString& val);
-    QJsonObject createPayload(const QString& val);
+    QJsonObject createObjectStatusIndPayload(const QString& obj, const QString& val);
+    QJsonObject createMeterCounterStatusIndPayload(const QString& val, const QString& unit);
     QVariant getValueForObject(const QString& obj, const QString& val);
     QJsonObject createControlRespPayload();
 

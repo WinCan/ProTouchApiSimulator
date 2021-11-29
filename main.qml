@@ -68,7 +68,7 @@ Window {
         }
 
         onSendMeterCounterStatusIndClicked: {
-            msgGen.sendMeterCounterValue(meterCounterValue)
+            msgGen.sendMeterCounterValue(meterCounterValue, meterCounterUnit)
         }
     }
 

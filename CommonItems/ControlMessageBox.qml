@@ -83,6 +83,7 @@ Rectangle {
         }
         TextField {
             id: errorDesc
+            selectByMouse: true
             onTextEdited: {
                 errorText = errorDesc.text
             }
