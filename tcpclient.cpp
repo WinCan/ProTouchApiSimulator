@@ -19,6 +19,11 @@ TcpClient::TcpClient(const QString& host, quint32 port)
     });
 }
 
+TcpClient::~TcpClient()
+{
+    disconnect();
+}
+
 void TcpClient::connect()
 {
     m_socket->connectToHost(m_host, m_port);

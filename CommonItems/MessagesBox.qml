@@ -28,6 +28,7 @@ Rectangle {
     }
 
     ScrollView {
+        id: scrollView
         anchors.top: messageTitle.bottom
         anchors.topMargin: Design.smallMargin
         anchors.left: parent.left
@@ -39,12 +40,13 @@ Rectangle {
 
         clip: true
 
-        TextEdit {
+        TextArea {
             id: textEdit
 
             anchors.fill: parent
             wrapMode: TextEdit.WrapAnywhere
             selectByMouse: true
+
         }
     }
 }

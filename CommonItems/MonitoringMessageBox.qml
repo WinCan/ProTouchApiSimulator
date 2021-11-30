@@ -11,6 +11,7 @@ Rectangle {
     property alias object: object.text
     property alias value: value.text
     property alias meterCounterValue: meterCounterValue.text
+    property string meterCounterUnit
 
     signal sendObjectStatusIndClicked
     signal sendMeterCounterStatusIndClicked
@@ -52,11 +53,13 @@ Rectangle {
         Label { text: "Object:" }
         TextField {
             id: object
+            selectByMouse: true
         }
 
         Label { text: "Value:"}
         TextField {
             id: value
+            selectByMouse: true
         }
     }
 
@@ -95,14 +98,44 @@ Rectangle {
         TextField {
             id: meterCounterValue
             width: 10
-            validator: IntValidator{}
+            selectByMouse: true
+            validator: DoubleValidator {
+                notation: DoubleValidator.StandardNotation
+            }
         }
+    }
+
+    GridLayout {
+        id: meterCounterUnitBox
+        columns: 2
+        rowSpacing: Design.smallMargin
+        columnSpacing: Design.smallMargin
+        anchors {
+            top: meterCounterBox.bottom
+            topMargin: Design.mediumMargin
+            left: parent.left
+            leftMargin: Design.mediumMargin
+            right: parent.right
+            rightMargin: Design.mediumMargin
+        }
+
+        Label { text: "Meter Counter Unit:"}
+        ComboBox {
+            model: ListModel {
+                ListElement { text: "meter" }
+                ListElement { text: "feet" }
+            }
+            onCurrentIndexChanged: {
+                meterCounterUnit = (currentIndex === 0 ? "meter" : "feet")
+            }
+        }
+
     }
 
     Button {
         id: updateMeterCounterBtn
         anchors {
-            top: meterCounterBox.bottom
+            top: meterCounterUnitBox.bottom
             topMargin: Design.mediumMargin
             left: parent.left
             leftMargin: Design.mediumMargin

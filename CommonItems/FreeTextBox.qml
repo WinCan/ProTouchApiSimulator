@@ -80,6 +80,7 @@ Rectangle {
 
             TextField {
                 id: textFieldInput
+                selectByMouse: true
                 Layout.preferredWidth:  200
             }
             SpinBox {

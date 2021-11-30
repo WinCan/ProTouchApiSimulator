@@ -114,18 +114,20 @@ void MessageGenerator::sendControlMessage(const QString& msgName, MessageId msgI
     m_client->sendMessage(createMessage(createHeader(msgName, CONTROL, msgId), createControlRespPayload()));
 }
 
-void MessageGenerator::sendMeterCounterValue(const QString& val)
+void MessageGenerator::sendMeterCounterValue(const QString& val, const QString& unit)
 {
     static const QString METER_COUNTER_STATUS_IND = "METER_COUNTER_STATUS_IND";
 
-    m_client->sendMessage(createMessage(createHeader(METER_COUNTER_STATUS_IND, MONITORING, MESSAGE_ID), createPayload(val)));
+    m_client->sendMessage(createMessage(createHeader(METER_COUNTER_STATUS_IND, MONITORING, MESSAGE_ID),
+                                        createMeterCounterStatusIndPayload(val, unit)));
 }
 
 void MessageGenerator::sendObjectValue(const QString& obj, const QString& val)
 {
     static const QString OBJECT_STATUS_IND = "OBJECT_STATUS_IND";
 
-    m_client->sendMessage(createMessage(createHeader(OBJECT_STATUS_IND, MONITORING, MESSAGE_ID), createPayload(obj, val)));
+    m_client->sendMessage(createMessage(createHeader(OBJECT_STATUS_IND, MONITORING, MESSAGE_ID),
+                                        createObjectStatusIndPayload(obj, val)));
 }
 void MessageGenerator::sendCreateFreeText(const QString& text,
                                         int x,
@@ -167,14 +169,15 @@ QJsonObject MessageGenerator::createHeader(const QString& msgName, const QString
     return header;
 }
 
-QJsonObject MessageGenerator::createPayload(const QString& val)
+QJsonObject MessageGenerator::createMeterCounterStatusIndPayload(const QString& val, const QString& unit)
 {
     QJsonObject payload;
-    payload.insert("value", val.toInt());
+    payload.insert("value", QLocale::system().toDouble(val));
+    payload.insert("unit", unit);
     return payload;
 }
 
-QJsonObject MessageGenerator::createPayload(const QString& obj, const QString& val)
+QJsonObject MessageGenerator::createObjectStatusIndPayload(const QString& obj, const QString& val)
 {
     QJsonObject payload;
     payload.insert("value", QJsonValue::fromVariant(getValueForObject(obj.simplified(), val)));
@@ -188,7 +191,7 @@ QVariant MessageGenerator::getValueForObject(const QString& obj, const QString& 
         obj.contains("levelIndicator", Qt::CaseInsensitive))
         return val.toInt();
     else if (obj.contains("switch", Qt::CaseInsensitive))
-        return (obj == "true" ? true : false);
+        return (val == "true" ? true : false);
     return  val;
 }
 

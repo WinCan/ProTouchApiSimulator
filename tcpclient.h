@@ -12,6 +12,7 @@ class TcpClient : public QObject
     Q_OBJECT
 public:
     explicit TcpClient(const QString& host, quint32 port);
+    ~TcpClient();
 
     void connect();
     void disconnect();
