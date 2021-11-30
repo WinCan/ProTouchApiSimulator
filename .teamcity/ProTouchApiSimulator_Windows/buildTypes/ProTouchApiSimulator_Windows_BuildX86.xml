@@ -32,13 +32,40 @@ make -j%teamcity.agent.hardware.cpuCount% || exit 1]]></param>
       <runner id="RUNNER_19" name="Deploy" type="simpleRunner">
         <parameters>
           <param name="script.content"><![CDATA[echo "Copying mingw32 dependencies..."
-
-for dllfile in `ntldd -R build\release\ProTouchApiSimulator.exe | grep "mingw32" | sed "s/^[ \t]*//" | cut -d ' ' -f 3` ; do
-    if [ `echo $dllfile | rev | cut -d '\' -f 1 | rev | tr 'A-Z' 'a-z'` != "opengl32.dll" ] ; then
-        echo "Copying" $dllfile;
-        cp -f $dllfile build/release/;
-    fi
-done
+cp C:\msys2_pt3\mingw32\bin\libjbig-0.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libwebpmux-3.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libwebpdemux-2.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libwebp-7.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libLerc.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libdeflate.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\liblzma-5.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libtiff-5.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\liblcms2-2.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libmng-2.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libjpeg-8.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libjasper-4.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libpcre-1.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libiconv-2.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libintl-8.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libglib-2.0-0.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libicuin69.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libbrotlicommon.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libgraphite2.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libbrotlidec.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libbz2-1.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libfreetype-6.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libicudt69.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libpng16-16.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libharfbuzz-0.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libicuuc69.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libpcre2-16-0.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libzstd.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libmd4c.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\zlib1.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libdouble-conversion.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libwinpthread-1.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libstdc++-6.dll build/release/ 
+cp C:\msys2_pt3\mingw32\bin\libgcc_s_dw2-1.dll build/release/
 
 echo "Deploying qt..."
 echo windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime
