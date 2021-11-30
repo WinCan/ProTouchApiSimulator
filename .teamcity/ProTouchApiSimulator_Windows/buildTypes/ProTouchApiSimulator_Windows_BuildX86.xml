@@ -31,7 +31,9 @@ make -j%teamcity.agent.hardware.cpuCount% || exit 1]]></param>
       </runner>
       <runner id="RUNNER_19" name="Deploy" type="simpleRunner">
         <parameters>
-          <param name="script.content"><![CDATA[echo "Deploying qt..."
+          <param name="script.content"><![CDATA[echo "ntldd build\release\ProTouchApiSimulator.exe"
+ntldd -R  build\release\ProTouchApiSimulator.exe | grep -v ext | grep -v WIND
+echo "Deploying qt..."
 echo windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime
 windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime]]></param>
           <param name="teamcity.step.mode" value="default" />
