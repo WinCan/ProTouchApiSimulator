@@ -31,8 +31,15 @@ make -j%teamcity.agent.hardware.cpuCount% || exit 1]]></param>
       </runner>
       <runner id="RUNNER_19" name="Deploy" type="simpleRunner">
         <parameters>
-          <param name="script.content"><![CDATA[echo "ntldd build\release\ProTouchApiSimulator.exe"
-ntldd -R  build\release\ProTouchApiSimulator.exe | grep -v ext | grep -v WIND
+          <param name="script.content"><![CDATA[echo "Copying mingw32 dependencies..."
+
+for dllfile in `ntldd -R build\release\ProTouchApiSimulator.exe | grep "mingw32" | sed "s/^[ \t]*//" | cut -d ' ' -f 3` ; do
+    if [ `echo $dllfile | rev | cut -d '\' -f 1 | rev | tr 'A-Z' 'a-z'` != "opengl32.dll" ] ; then
+        echo "Copying" $dllfile;
+        cp -f $dllfile build/release/;
+    fi
+done
+
 echo "Deploying qt..."
 echo windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime
 windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime]]></param>
