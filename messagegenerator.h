@@ -19,6 +19,8 @@ static constexpr char MOVE_OBJECT_REQ[] = "MOVE_OBJECT_REQ";
 static constexpr char MOVE_OBJECT_RESP[] = "MOVE_OBJECT_RESP";
 static constexpr char ACTION_OBJECT_TRIGGER_REQ[] = "ACTION_OBJECT_TRIGGER_REQ";
 static constexpr char ACTION_OBJECT_TRIGGER_RESP[] = "ACTION_OBJECT_TRIGGER_RESP";
+static constexpr char CHANGE_METER_COUNTER_VALUE_REQ[] = "CHANGE_METER_COUNTER_VALUE_REQ";
+static constexpr char CHANGE_METER_COUNTER_VALUE_RESP[] = "CHANGE_METER_COUNTER_VALUE_RESP";
 
 class MessageGenerator : public QObject
 {

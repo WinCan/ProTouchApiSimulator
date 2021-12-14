@@ -40,25 +40,24 @@ void MessageGenerator::onMessageReceived(const QString& message)
     auto msgType = jsonHeader.value("messageType").toString();
     auto msgId = jsonHeader.value("messageId").toInt();
 
-    if (msgType == "CONTROL")
+    if (msgType == CONTROL)
     {
         auto object = jsonPayload.value("object").toString();
         if (msgName == CHANGE_OBJECT_VALUE_REQ)
         {
-            auto val = jsonPayload.value("value").toInt();
-            qDebug() << "change object: " << object << ", value to: " << val;
             sendControlMessage(CHANGE_OBJECT_VALUE_RESP, msgId);
         }
         else if (msgName == MOVE_OBJECT_REQ)
         {
-            auto angle = jsonPayload.value("value").toInt();
-            qDebug() << "move object: " << object << ", angle to: " << angle;
             sendControlMessage(MOVE_OBJECT_RESP, msgId);
         }
         else if (msgName == ACTION_OBJECT_TRIGGER_REQ)
         {
-            qDebug() << "action triggered on object: " << object;
             sendControlMessage(ACTION_OBJECT_TRIGGER_RESP, msgId);
+        }
+        else if (msgName == CHANGE_METER_COUNTER_VALUE_REQ)
+        {
+            sendControlMessage(CHANGE_METER_COUNTER_VALUE_RESP, msgId);
         }
         else
         {
