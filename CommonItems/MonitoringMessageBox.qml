@@ -100,7 +100,7 @@ Rectangle {
             width: 10
             selectByMouse: true
             validator: RegExpValidator {
-                regExp: /^[0-9]*([,.][0-9]*)?$/
+                regExp: /^[0-9]+([,.][0-9])?[0-9]*$/
             }
 
         }
