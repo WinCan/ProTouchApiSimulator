@@ -72,7 +72,7 @@ private:
 
     QJsonObject createHeader(const QString& msgName, const QString& msgType, MessageId messageId);
     QJsonObject createObjectStatusIndPayload(const QString& obj, const QString& val);
-    QJsonObject createMeterCounterStatusIndPayload(const QString& val, const QString& unit);
+    QJsonObject createMeterCounterStatusIndPayload(QString val, const QString& unit);
     QVariant getValueForObject(const QString& obj, const QString& val);
     QJsonObject createControlRespPayload();
 

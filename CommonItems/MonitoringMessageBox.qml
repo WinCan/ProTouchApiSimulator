@@ -1,4 +1,4 @@
-import QtQuick 2.10
+import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 
@@ -99,9 +99,10 @@ Rectangle {
             id: meterCounterValue
             width: 10
             selectByMouse: true
-            validator: DoubleValidator {
-                notation: DoubleValidator.StandardNotation
+            validator: RegExpValidator {
+                regExp: /^[0-9]+([,.][0-9])?[0-9]*$/
             }
+
         }
     }
 

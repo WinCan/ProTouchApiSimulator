@@ -168,10 +168,10 @@ QJsonObject MessageGenerator::createHeader(const QString& msgName, const QString
     return header;
 }
 
-QJsonObject MessageGenerator::createMeterCounterStatusIndPayload(const QString& val, const QString& unit)
+QJsonObject MessageGenerator::createMeterCounterStatusIndPayload(QString val, const QString& unit)
 {
     QJsonObject payload;
-    payload.insert("value", QLocale::system().toDouble(val));
+    payload.insert("value", val.replace(",", ".").toDouble());
     payload.insert("unit", unit);
     return payload;
 }
