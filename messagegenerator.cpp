@@ -64,6 +64,10 @@ void MessageGenerator::onMessageReceived(const QString& message)
             qDebug() << "undefinded message name: " << msgName;
         }
     }
+    else if (msgType == VIDEO)
+    {
+        //TODO handle ip from ProTouchApi if needed
+    }
     else
     {
         qDebug() << "undefinded message type: " << msgType;
@@ -121,6 +125,14 @@ void MessageGenerator::sendMeterCounterValue(const QString& val, const QString& 
                                         createMeterCounterStatusIndPayload(val, unit)));
 }
 
+void MessageGenerator::sendStartVideoStreaming(const QString& port)
+{
+    static const QString START_VIDEO_STREAMING = "START_VIDEO_STREAMING_REQ";
+
+    m_client->sendMessage(createMessage(createHeader(START_VIDEO_STREAMING, VIDEO, MESSAGE_ID),
+                                        createStartVideoStreamingPayload(port.toInt())));
+}
+
 void MessageGenerator::sendObjectValue(const QString& obj, const QString& val)
 {
     static const QString OBJECT_STATUS_IND = "OBJECT_STATUS_IND";
@@ -173,6 +185,13 @@ QJsonObject MessageGenerator::createMeterCounterStatusIndPayload(QString val, co
     QJsonObject payload;
     payload.insert("value", val.replace(",", ".").toDouble());
     payload.insert("unit", unit);
+    return payload;
+}
+
+QJsonObject MessageGenerator::createStartVideoStreamingPayload(int port)
+{
+    QJsonObject payload;
+    payload.insert("port", port);
     return payload;
 }
 

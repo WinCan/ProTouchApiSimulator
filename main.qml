@@ -10,10 +10,10 @@ import io.qt.MessageGenerator 1.0
 
 Window {
     visible: true
-    width: 1130
+    width: 1340
     height: 800
     title: "Client simulator"
-    minimumWidth: 1130
+    minimumWidth: 1340
     minimumHeight: 800
     color: Design.backgroundColor
 
@@ -95,6 +95,19 @@ Window {
 
         onMessageHandlingButtonClicked: {
             msgGen.ignoreMessage = !msgGen.ignoreMessage
+        }
+    }
+
+    VideoMessageBox {
+        id: videoMessageBox
+
+        anchors.top: informationBox.bottom
+        anchors.left: controlMessageBox.right
+
+        connectedToServer: msgGen.connected
+
+        onStartVideoStreaming: {
+            msgGen.sendStartVideoStreaming(port)
         }
     }
 
