@@ -9,6 +9,8 @@ Rectangle {
     id: root
 
     property bool connectedToServer
+    property string streamingDefaultPort
+
     signal startVideoStreaming
 
     property alias port: port.text
@@ -48,7 +50,7 @@ Rectangle {
         TextField {
             id: port
             selectByMouse: true
-            text: "5000"
+            text: streamingDefaultPort
             validator: IntValidator{}
         }
     }

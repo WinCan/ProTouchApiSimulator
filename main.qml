@@ -105,6 +105,7 @@ Window {
         anchors.left: controlMessageBox.right
 
         connectedToServer: msgGen.connected
+        streamingDefaultPort: msgGen.streamingDefaultPort
 
         onStartVideoStreaming: {
             msgGen.sendStartVideoStreaming(port)

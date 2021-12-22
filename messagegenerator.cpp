@@ -188,11 +188,11 @@ QJsonObject MessageGenerator::createMeterCounterStatusIndPayload(QString val, co
     return payload;
 }
 
-QJsonObject MessageGenerator::createStartVideoStreamingPayload(int port)
+QJsonObject MessageGenerator::createStartVideoStreamingPayload(int port) const
 {
-    QJsonObject payload;
-    payload.insert("port", port);
-    return payload;
+    return QJsonObject{
+        {"port", port}
+    };
 }
 
 QJsonObject MessageGenerator::createObjectStatusIndPayload(const QString& obj, const QString& val)
