@@ -31,7 +31,16 @@ QtObject{
         property color borderColor: "grey"
 
         readonly property int height: 300
-        readonly property int width: 350
+        readonly property int width: 270
+        readonly property int borderSize: 2
+    }
+
+    property QtObject videoMessageBox: QtObject {
+        property color backgroundColor: "lightskyblue"
+        property color borderColor: "grey"
+
+        readonly property int height: 300
+        readonly property int width: 270
         readonly property int borderSize: 2
     }
 
