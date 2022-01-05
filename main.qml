@@ -110,6 +110,14 @@ Window {
         onStartVideoStreaming: {
             msgGen.sendStartVideoStreaming(port)
         }
+
+        onPerfromVideoAction: {
+            msgGen.sendPerformVideoAction()
+        }
+
+        onVideoActionChanged: {
+            msgGen.updateVideoAction(videoAction)
+        }
     }
 
     FreeTextBox {
@@ -132,9 +140,4 @@ Window {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
     }
-
-
-
-
-
 }

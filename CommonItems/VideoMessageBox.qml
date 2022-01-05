@@ -11,7 +11,10 @@ Rectangle {
     property bool connectedToServer
     property string streamingDefaultPort
 
+    property int videoAction
+
     signal startVideoStreaming
+    signal perfromVideoAction
 
     property alias port: port.text
 
@@ -56,7 +59,7 @@ Rectangle {
     }
 
     Button {
-        id: connectBtn
+        id: startVideoBtn
         anchors {
             top: connectionGrid.bottom
             topMargin: Design.mediumMargin
@@ -69,6 +72,49 @@ Rectangle {
             color: Design.defaultButtonColor
         }
         onClicked: startVideoStreaming()
+    }
+
+    GridLayout {
+        id: performVideoAction
+        columns: 2
+        rowSpacing: Design.smallMargin
+        columnSpacing: Design.smallMargin
+        anchors {
+            top: startVideoBtn.bottom
+            topMargin: Design.mediumMargin
+            left: parent.left
+            leftMargin: Design.mediumMargin
+        }
+        Label {
+            id: statusLabel
+            text: "videoAction"
+        }
+        ComboBox {
+            model: ListModel {
+                ListElement { text: "Stop" }
+                ListElement { text: "Pause" }
+                ListElement { text: "Resume" }
+            }
+            onCurrentIndexChanged: {
+                videoAction = currentIndex
+            }
+        }
+    }
+
+    Button {
+        id: stopVideoBtn
+        anchors {
+            top: performVideoAction.bottom
+            topMargin: Design.mediumMargin
+            left: parent.left
+            leftMargin: Design.mediumMargin
+        }
+        text: "Perform Video Action"
+        enabled: connectedToServer
+        background: Rectangle {
+            color: Design.defaultButtonColor
+        }
+        onClicked: perfromVideoAction()
     }
 }
 
