@@ -12,7 +12,7 @@ This simple application allows simulate client side.
 	- **ACTION_OBJECT_TRIGGER_RESP**
 	- **CHANGE_METER_COUNTER_VALUE_RESP**
    You can create payload for this messages (status, errorCode and error). Also you can ignore messages by clicking “Ignore messages” for example to test error handling timeout, etc.
-4. Last box is "Video Message" for simulating **START_VIDEO_STREAMING_REQ** with port as parameter.
+4. Last box is "Video Message" for simulating **START_VIDEO_STREAMING_REQ** with port as parameter and **PERFORM_VIDEO_ACTION_REQ** with video action such as pause, resume or stop.
 5. There is a box "Create free text" where you can send **CREATE_FREE_TEXT** message to OSD on server.
 6. On the bottom there is text area when client can see messages, which are sent by server.
 
