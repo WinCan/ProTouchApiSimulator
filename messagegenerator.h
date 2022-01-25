@@ -40,11 +40,13 @@ public:
 
     Q_INVOKABLE void sendMeterCounterValue(const QString& val, const QString& unit);
     Q_INVOKABLE void sendStartVideoStreaming(const QString& port);
+    Q_INVOKABLE void sendPerformVideoAction();
     Q_INVOKABLE void sendObjectValue(const QString& obj, const QString& val);
 
     Q_INVOKABLE void updateErrorCode(int errorCode);
     Q_INVOKABLE void updateMsgStatus(bool status);
     Q_INVOKABLE void updateErrorDsc(const QString& description);
+    Q_INVOKABLE void updateVideoAction(int videoAction);
 
     Q_INVOKABLE void sendCreateFreeText(const QString& text,
                                         int x,
@@ -85,6 +87,7 @@ private:
     QJsonObject createStartVideoStreamingPayload(int port) const;
     QVariant getValueForObject(const QString& obj, const QString& val);
     QJsonObject createControlRespPayload();
+    QJsonObject createPerformVideoActionRespPayload();
 
     QByteArray createMessage(const QJsonObject& header, const QJsonObject& payload);
 
@@ -95,6 +98,8 @@ private:
     bool m_messageStatus{true};
     int m_errorCode{0};
     QString m_errorDsc{""};
+
+    int m_videoAction;
 };
 
 

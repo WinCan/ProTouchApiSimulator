@@ -89,6 +89,11 @@ void MessageGenerator::updateErrorDsc(const QString& description)
     m_errorDsc = description;
 }
 
+void MessageGenerator::updateVideoAction(int videoAction)
+{
+    m_videoAction = videoAction;
+}
+
 void MessageGenerator::connectToHost(const QString& ip, const QString& port)
 {
     QHostAddress host(ip);
@@ -123,6 +128,14 @@ void MessageGenerator::sendMeterCounterValue(const QString& val, const QString& 
 
     m_client->sendMessage(createMessage(createHeader(METER_COUNTER_STATUS_IND, MONITORING, MESSAGE_ID),
                                         createMeterCounterStatusIndPayload(val, unit)));
+}
+
+void MessageGenerator::sendPerformVideoAction()
+{
+    static const QString PERFORM_VIDEO_ACTION_REQ = "PERFORM_VIDEO_ACTION_REQ";
+
+    m_client->sendMessage(createMessage(createHeader(PERFORM_VIDEO_ACTION_REQ, VIDEO, MESSAGE_ID),
+                                        createPerformVideoActionRespPayload()));
 }
 
 void MessageGenerator::sendStartVideoStreaming(const QString& port)
@@ -220,4 +233,11 @@ QJsonObject MessageGenerator::createControlRespPayload()
     payload.insert("errorCode", QJsonValue::fromVariant(m_errorCode));
     payload.insert("error", QJsonValue::fromVariant(m_errorDsc));
     return payload;
+}
+
+QJsonObject MessageGenerator::createPerformVideoActionRespPayload()
+{
+    return QJsonObject{
+        {"videoAction", m_videoAction}
+    };
 }
