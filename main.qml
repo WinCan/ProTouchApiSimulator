@@ -25,7 +25,7 @@ Window {
         target: msgGen
 
         function onMsgReceived(message) {
-            messagesBox.textArea.append(message)
+            messagesBox.logNewMessage(message)
         }
     }
 
