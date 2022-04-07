@@ -6,8 +6,6 @@ import design 1.0
 Rectangle {
     id: root
 
-    property alias textArea: textEdit
-
     anchors.leftMargin: Design.bigMargin
     anchors.topMargin:  Design.bigMargin
     anchors.bottomMargin: Design.bigMargin
@@ -15,6 +13,12 @@ Rectangle {
 
     border.color: Design.messagesBox.borderColor
     border.width: Design.messagesBox.borderSize
+
+    function logNewMessage(message)
+    {
+        textEdit.text = message + '\n' + textEdit.text
+        scrollView.ScrollBar.vertical.position = 0.0
+    }
 
     Label {
         id: messageTitle
@@ -38,6 +42,8 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Design.smallMargin
 
+        ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+
         clip: true
 
         TextArea {
@@ -46,7 +52,7 @@ Rectangle {
             anchors.fill: parent
             wrapMode: TextEdit.WrapAnywhere
             selectByMouse: true
-
         }
     }
+
 }
