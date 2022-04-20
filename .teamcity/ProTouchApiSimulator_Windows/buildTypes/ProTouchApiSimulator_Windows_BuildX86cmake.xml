@@ -24,7 +24,7 @@ g++ --version]]></param>
           <param name="script.content"><![CDATA[mkdir build 
 cd build 
 
-qmake ../ProTouchApiSimulator CONFIG+=release "QMAKE_CXX=ccache g++" 
+cmake ../ProTouchApiSimulator CONFIG+=release "QMAKE_CXX=ccache g++" 
 make -j%teamcity.agent.hardware.cpuCount% || exit 1]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
