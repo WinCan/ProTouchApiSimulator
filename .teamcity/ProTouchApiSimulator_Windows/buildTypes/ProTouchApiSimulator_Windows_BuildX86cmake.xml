@@ -13,6 +13,7 @@
       <runner id="RUNNER_15" name="check" type="simpleRunner">
         <parameters>
           <param name="script.content"><![CDATA[qmake -v
+cmake --version
 g++ --version]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
