@@ -18,6 +18,18 @@ g++ --version]]></param>
           <param name="use.custom.script" value="true" />
         </parameters>
       </runner>
+      <runner id="RUNNER_48" name="Compilation (1)" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[mkdir build 
+cd build 
+
+cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release
+ninja || exit 1
+ninja install || exit 1]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
       <runner id="RUNNER_16" name="Compilation" type="simpleRunner">
         <parameters>
           <param name="script.content"><![CDATA[mkdir build 
@@ -70,18 +82,6 @@ cp -f -n C:\msys2_pt3\mingw32\bin\libgcc_s_dw2-1.dll build/release/
 echo "Deploying qt..."
 echo windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime
 windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime]]></param>
-          <param name="teamcity.step.mode" value="default" />
-          <param name="use.custom.script" value="true" />
-        </parameters>
-      </runner>
-      <runner id="RUNNER_48" name="Compilation (1)" type="simpleRunner">
-        <parameters>
-          <param name="script.content"><![CDATA[mkdir build 
-cd build 
-
-cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release
-ninja || exit 1
-ninja install || exit 1]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
         </parameters>
