@@ -25,7 +25,8 @@ g++ --version]]></param>
 cd build 
 
 cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release
-ninja || exit 1]]></param>
+ninja || exit 1
+ninja install || exit 1]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
         </parameters>
