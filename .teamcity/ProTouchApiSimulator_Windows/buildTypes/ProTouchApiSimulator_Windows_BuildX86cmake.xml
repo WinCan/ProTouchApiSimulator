@@ -24,7 +24,7 @@ g++ --version]]></param>
           <param name="script.content"><![CDATA[mkdir build 
 cd build 
 
-CXX="ccache g++" cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release
+cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release
 ninja || exit 1]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
