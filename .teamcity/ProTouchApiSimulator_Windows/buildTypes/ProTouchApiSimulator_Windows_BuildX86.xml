@@ -24,7 +24,8 @@ g++ --version]]></param>
       </runner>
       <runner id="RUNNER_48" name="Compilation cmake" type="simpleRunner">
         <parameters>
-          <param name="script.content"><![CDATA[mkdir build 
+          <param name="script.content"><![CDATA[rm -rf build
+mkdir build 
 cd build 
 
 cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release
