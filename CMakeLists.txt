@@ -1,4 +1,5 @@
 project(ProTouchApiSimulator)
+cmake_minimum_required(VERSION 3.12.0)
 
 set(HEADERS
 	messagegenerator.h
@@ -17,6 +18,11 @@ set(QRC_FILES
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
+
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -s")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
+
+include(Cache.cmake)
 
 find_package(Qt5 COMPONENTS Widgets Qml Quick REQUIRED)
 
@@ -38,3 +44,9 @@ target_link_libraries(ProTouchApiSimulator
                       )
 
 target_include_directories(ProTouchApiSimulator PUBLIC ./)
+
+set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR})
+
+install(TARGETS ProTouchApiSimulator
+        CONFIGURATIONS Release
+        RUNTIME DESTINATION release)
