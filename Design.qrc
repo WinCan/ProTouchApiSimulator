@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>design/Design.qml</file>
         <file>design/qmldir</file>
+        <file>design/PtApiTab.qml</file>
+        <file>design/DynamicUiTab.qml</file>
+        <file>design/PanelEditTab.qml</file>
     </qresource>
 </RCC>
