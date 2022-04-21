@@ -1,6 +1,4 @@
-#ifndef DYNAMICGUICONTROLLER_H
-#define DYNAMICGUICONTROLLER_H
-
+#pragma once
 #include <QObject>
 #include "zmq.hpp"
 
@@ -21,5 +19,3 @@ private:
     zmq::socket_t push;
     zmq::socket_t pull;
 };
-
-#endif // DYNAMICGUICONTROLLER_H
