@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 
 #include <messagegenerator.h>
+#include <DynamicGui/DynamicGuiController.h>
 
 int main(int argc, char *argv[])
 {
@@ -10,6 +11,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<MessageGenerator>("io.qt.MessageGenerator", 1, 0, "MessageGenerator");
+    qmlRegisterType<DynamicGuiController>("io.qt.DynamicGuiController", 1, 0, "DynamicGuiController");
 
     QQmlApplicationEngine engine;
     engine.addImportPath(QStringLiteral(":/qml/"));

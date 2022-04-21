@@ -77,6 +77,16 @@ QtObject{
         readonly property int borderSize: 2
     }
 
+    property QtObject dynamicGui: QtObject {
+        property color borderColor: "black"
+        readonly property int borderSize: 2
+    }
 
-
+    property QtObject panelEditTab: QtObject {
+        property color borderColor: "black"
+        property color backgroundColor: "lightskyblue"
+        property color textAreaBackgroundColor: "white"
+        readonly property int borderSize: 2
+        readonly property int textAreaBorderSize: 1
+    }
 }
