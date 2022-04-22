@@ -84,6 +84,7 @@ cp -f -n C:\msys2_pt3\mingw32\bin\libwinpthread-1.dll build/release/
 cp -f -n C:\msys2_pt3\mingw32\bin\libstdc++-6.dll build/release/ 
 cp -f -n C:\msys2_pt3\mingw32\bin\libgcc_s_dw2-1.dll build/release/
 cp -f -n C:\msys2_pt3\mingw32\bin\libzmq.dll build/release/
+cp -f -n C:\msys2_pt3\mingw32\bin\libsodium-23.dll build/release/
 echo "Deploying qt..."
 echo windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime
 windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime]]></param>
