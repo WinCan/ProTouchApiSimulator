@@ -6,7 +6,7 @@ Rectangle {
     property string panelName
     property string internalPanelName
     property string defaultValue
-    property alias isVisible: isVisibleSwitch.checked
+    property bool isVisible: true
     property alias config: textArea.text
 
     border.color: Design.panelEditTab.borderColor
@@ -39,24 +39,35 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
         }
 
-        Switch
-        {
-            id: isVisibleSwitch
-            height: titleRect.height
+        Button {
+            id: clearButton
+            anchors.bottom: titleRect.bottom
             anchors.top: titleRect.top
             anchors.right: titleRect.right
-            checked: true
-        }
-            Text
-            {
-                id: visibleTxt
-                anchors.right: isVisibleSwitch.left
-                anchors.top: isVisibleSwitch.top
-                height: titleRect.height
-                text: "Visible"
-                verticalAlignment: Text.AlignVCenter
+            anchors.topMargin: Design.smallMargin
+            anchors.bottomMargin: Design.smallMargin
+            anchors.leftMargin: Design.smallMargin
+            anchors.rightMargin: Design.smallMargin
+            text: "Clear"
+            onClicked: {
+                textArea.text = "[]"
             }
+        }
 
+        Button {
+            id: defaultButton
+            anchors.bottom: titleRect.bottom
+            anchors.top: titleRect.top
+            anchors.right: clearButton.left
+            anchors.topMargin: Design.smallMargin
+            anchors.bottomMargin: Design.smallMargin
+            anchors.leftMargin: Design.smallMargin
+            anchors.rightMargin: Design.smallMargin
+            text: "Default"
+            onClicked: {
+                textArea.text = defaultValue
+            }
+        }
     }
 
     ScrollView
@@ -81,6 +92,7 @@ Rectangle {
             id: textArea
             text: defaultValue
             width: scrollView.width
+            selectByMouse: true
         }
     }
 }

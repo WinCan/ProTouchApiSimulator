@@ -7,21 +7,22 @@ constexpr static const char PULL_ADDR[] = "tcp://127.0.0.1:52944";
 DynamicGuiController::DynamicGuiController(QObject* parent)
     : QObject{parent}
     , ctx{1}
-    , push{ctx, ZMQ_PUSH}
-    , pull{ctx, ZMQ_PULL}
+    , dealer{ctx, ZMQ_DEALER}
+    //, push{ctx, ZMQ_PUSH}
+    //, pull{ctx, ZMQ_PULL}
 {
 }
 
 void DynamicGuiController::enable()
 {
-    pull.bind(PULL_ADDR);
-    push.connect(PUSH_ADDR);
+    //pull.bind(PULL_ADDR);
+    dealer.connect(PUSH_ADDR);
 }
 
 void DynamicGuiController::disable()
 {
-    pull.unbind(PULL_ADDR);
-    push.disconnect(PUSH_ADDR);
+    //pull.unbind(PULL_ADDR);
+    dealer.disconnect(PUSH_ADDR);
 }
 
 
@@ -185,5 +186,5 @@ void DynamicGuiController::send(const QString& str)
 {
     auto byteArray = str.toUtf8();
     zmq::message_t msg{byteArray.data(), static_cast<size_t>(byteArray.size())};
-    push.send(msg);
+    dealer.send(msg);
 }

@@ -16,6 +16,5 @@ public:
     Q_INVOKABLE void send(const QString& msg);
 private:
     zmq::context_t ctx;
-    zmq::socket_t push;
-    zmq::socket_t pull;
+    zmq::socket_t dealer;
 };

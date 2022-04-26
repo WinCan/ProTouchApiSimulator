@@ -51,29 +51,9 @@ Rectangle {
         }
         Button
         {
-            id: sendVisibilityButton
-            text: "Send Visibility"
-            anchors.right: topBar.right
-            anchors.top: topBar.top
-            anchors.bottom: topBar.bottom
-            anchors.topMargin: Design.smallMargin
-            anchors.bottomMargin: Design.smallMargin
-            anchors.leftMargin: Design.smallMargin
-            anchors.rightMargin: Design.smallMargin
-            enabled: isEnabledSwitch.checked
-            onClicked: {
-                const msg = {
-                    "visiblePanels":  [leftPanel, rightPanel, bottomPanel].filter(panel=>panel.isVisible)
-                                                                          .map(panel=>panel.internalPanelName)
-                };
-                controller.send(JSON.stringify(msg))
-            }
-        }
-        Button
-        {
             id: sendConfigButtion
             text: "Send Configuration"
-            anchors.right: sendVisibilityButton.left
+            anchors.right: topBar.right
             anchors.top: topBar.top
             anchors.bottom: topBar.bottom
             anchors.topMargin: Design.smallMargin
@@ -86,7 +66,7 @@ Rectangle {
                 for(const panel of [leftPanel, rightPanel, bottomPanel])
                 {
                     try {
-                        msg[panel.internalPanelName + "Items"] = JSON.parse(panel.config)
+                        msg[panel.internalPanelName] = JSON.parse(panel.config)
                     } catch(e) {
                         console.error("unabled to parse config for " + panel.panelName + ", aborting sending")
                         return
