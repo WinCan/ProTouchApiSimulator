@@ -6,7 +6,6 @@ Rectangle {
     property string panelName
     property string internalPanelName
     property string defaultValue
-    property bool isVisible: true
     property alias config: textArea.text
 
     border.color: Design.panelEditTab.borderColor

@@ -8,20 +8,16 @@ DynamicGuiController::DynamicGuiController(QObject* parent)
     : QObject{parent}
     , ctx{1}
     , dealer{ctx, ZMQ_DEALER}
-    //, push{ctx, ZMQ_PUSH}
-    //, pull{ctx, ZMQ_PULL}
 {
 }
 
 void DynamicGuiController::enable()
 {
-    //pull.bind(PULL_ADDR);
     dealer.connect(PUSH_ADDR);
 }
 
 void DynamicGuiController::disable()
 {
-    //pull.unbind(PULL_ADDR);
     dealer.disconnect(PUSH_ADDR);
 }
 
