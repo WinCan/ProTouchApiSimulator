@@ -5,5 +5,6 @@
         <file>design/PtApiTab.qml</file>
         <file>design/DynamicUiTab.qml</file>
         <file>design/PanelEditTab.qml</file>
+        <file>design/UdpVideoTab.qml</file>
     </qresource>
 </RCC>

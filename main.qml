@@ -29,6 +29,11 @@ Window {
             text: "Dynamic GUI"
             width: 200
         }
+        TabButton
+        {
+            text: "UDP Video"
+            width: 200
+        }
     }
 
     StackLayout
@@ -45,6 +50,13 @@ Window {
         Item
         {
             DynamicUiTab
+            {
+
+            }
+        }
+        Item
+        {
+            UdpVideoTab
             {
 
             }
