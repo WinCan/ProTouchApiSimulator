@@ -28,7 +28,7 @@ g++ --version]]></param>
 mkdir build 
 cd build 
 
-cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release
+cmake ../ProTouchApiSimulator -DCMAKE_PREFIX_PATH="/c/msys2_pt3/mingw64/qt5-static" -DCMAKE_BUILD_TYPE=Release
 ninja || exit 1
 ninja install || exit 1]]></param>
           <param name="teamcity.step.mode" value="default" />
