@@ -18,7 +18,8 @@
         <parameters>
           <param name="script.content"><![CDATA[qmake -v
 cmake --version
-g++ --version]]></param>
+g++ --version
+echo $PATH]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
         </parameters>
