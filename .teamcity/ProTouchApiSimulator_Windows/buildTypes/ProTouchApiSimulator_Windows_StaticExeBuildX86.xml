@@ -30,8 +30,10 @@ echo $PATH]]></param>
 mkdir build 
 cd build 
 
-cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release  -DCMAKE_PREFIX_PATH="/c/msys2_pt3/mingw64/qt5-static"
-ninja install]]></param>
+cmake ../ProTouchApiSimulator -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_BUILD_TYPE=Release  -DCMAKE_PREFIX_PATH="/c/msys2_pt3/mingw64/qt5-static;c:/msys2_pt3/mingw64/qt5-static;c:\msys2_pt3\mingw64\qt5-static"
+ninja 
+
+ntldd ProTouchApiSimulator.exe]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
         </parameters>
