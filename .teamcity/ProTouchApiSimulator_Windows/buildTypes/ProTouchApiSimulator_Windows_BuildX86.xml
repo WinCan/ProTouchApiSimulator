@@ -22,6 +22,20 @@ g++ --version]]></param>
           <param name="use.custom.script" value="true" />
         </parameters>
       </runner>
+      <runner id="RUNNER_56" name="Compilation cmake (1)" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[rm -rf build
+mkdir build 
+cd build 
+
+cmake ../ProTouchApiSimulator -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_BUILD_TYPE=Release  -DCMAKE_PREFIX_PATH="c:\msys2_pt3\mingw64\qt5-static"
+ninja 
+
+ntldd ProTouchApiSimulator.exe]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
       <runner id="RUNNER_48" name="Compilation cmake" type="simpleRunner">
         <parameters>
           <param name="script.content"><![CDATA[rm -rf build
@@ -88,20 +102,6 @@ cp -f -n C:\msys2_pt3\mingw32\bin\libsodium-23.dll build/release/
 echo "Deploying qt..."
 echo windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime
 windeployqt.exe build\release\ProTouchApiSimulator.exe  --force --verbose 2 --qmldir ProTouchApiSimulator --compiler-runtime]]></param>
-          <param name="teamcity.step.mode" value="default" />
-          <param name="use.custom.script" value="true" />
-        </parameters>
-      </runner>
-      <runner id="RUNNER_56" name="Compilation cmake (1)" type="simpleRunner">
-        <parameters>
-          <param name="script.content"><![CDATA[rm -rf build
-mkdir build 
-cd build 
-
-cmake ../ProTouchApiSimulator -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_BUILD_TYPE=Release  -DCMAKE_PREFIX_PATH="c:\msys2_pt3\mingw64\qt5-static"
-ninja 
-
-ntldd ProTouchApiSimulator.exe]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
         </parameters>
