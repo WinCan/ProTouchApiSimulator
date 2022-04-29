@@ -4,7 +4,7 @@
   <description />
   <settings>
     <options>
-      <option name="artifactRules" value="build\release =&gt; build.zip" />
+      <option name="artifactRules" value="build\release =&gt; build.zip&#xA;build\ProTouchApiSimulator.exe" />
     </options>
     <disabled-settings>
       <setting-ref ref="RUNNER_16" />
