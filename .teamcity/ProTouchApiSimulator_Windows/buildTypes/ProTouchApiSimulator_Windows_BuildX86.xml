@@ -30,7 +30,7 @@ g++ --version]]></param>
 mkdir build 
 cd build 
 
-cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release  -DCMAKE_PREFIX_PATH="c:\msys2_pt3\mingw64\qt5-static"
+cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release  -DCMAKE_PREFIX_PATH="c:\msys2_pt3\mingw32\qt5-static"
 ninja install || exit 1
 
 ntldd ProTouchApiSimulator.exe]]></param>
