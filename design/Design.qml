@@ -89,4 +89,12 @@ QtObject{
         readonly property int borderSize: 2
         readonly property int textAreaBorderSize: 1
     }
+
+    property QtObject udpVideoTab: QtObject  {
+        property color borderColor: "black"
+        property color backgroundColor: "lightskyblue"
+        property color textEditBackgroundColor: "white"
+        readonly property int borderSize: 2
+        readonly property int textEditBorderSize: 1
+    }
 }

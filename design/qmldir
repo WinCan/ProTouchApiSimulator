@@ -2,3 +2,4 @@ module design
 singleton Design 1.0 Design.qml
 PtApiTab 1.0 PtApiTab.qml
 DynamicUiTab 1.0 DynamicUiTab.qml
+UdpVideoTab 1.0 UdpVideoTab.qml

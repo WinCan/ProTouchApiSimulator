@@ -49,7 +49,6 @@ void TcpClient::sendMessage(const QByteArray& msg)
 {
     if (m_socket && m_socket->state() == QAbstractSocket::ConnectedState)
     {
-        qDebug() << "[" << m_socket->peerAddress() << ":" << m_socket->peerPort() << "] message sent: " << msg;
         m_socket->write(msg );
     }
 }

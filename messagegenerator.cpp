@@ -26,7 +26,6 @@ MessageGenerator::MessageGenerator(QObject *parent) :
 void MessageGenerator::onMessageReceived(const QString& message)
 {
     QString formattedMessage = QString("[%1][%2:%3]: %4").arg(QDateTime::currentDateTime().time().toString()).arg(m_client->host()).arg(m_client->port()).arg(message);
-    qDebug() << formattedMessage;
     msgReceived(formattedMessage);
     if (m_ignoreMessage)
     {

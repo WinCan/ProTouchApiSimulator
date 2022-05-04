@@ -21,14 +21,17 @@ set(CMAKE_AUTOUIC ON)
 
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -s")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
+set(CMAKE_CXX_STANDARD 17)
 
 include(Cache.cmake)
 
-find_package(Qt5 COMPONENTS Widgets Qml Quick REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Qml Quick QmlImportScanner QuickControls2 Gui QuickWidgets QmlWorkerScript REQUIRED)
 
 add_subdirectory(DynamicGui)
+add_subdirectory(UdpVideo)
 	
 add_executable(ProTouchApiSimulator
+               WIN32
                main.cpp
                ${SOURCES}
                ${HEADERS}
@@ -37,11 +40,27 @@ add_executable(ProTouchApiSimulator
 target_link_libraries(ProTouchApiSimulator
                       PUBLIC
                       Qt5::Core
+                      Qt5::QuickControls2
                       Qt5::Qml
                       Qt5::Widgets
                       Qt5::Quick
+                      Qt5::QuickWidgets
+                      Qt5::Gui
+                      Qt5::QmlWorkerScript
                       DynamicGui::DynamicGui
-                      )
+                      UdpVideo::UdpVideo)
+
+
+if(CMAKE_BUILD_TYPE MATCHES Release)
+        target_link_libraries(ProTouchApiSimulator
+                              PUBLIC
+                              -static
+                              -static-libgcc
+                              -static-libstdc++
+                              z
+                              zstd)
+endif()
+
 
 target_include_directories(ProTouchApiSimulator PUBLIC ./)
 
@@ -50,3 +69,5 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR})
 install(TARGETS ProTouchApiSimulator
         CONFIGURATIONS Release
         RUNTIME DESTINATION release)
+
+qt5_import_qml_plugins(ProTouchApiSimulator)
