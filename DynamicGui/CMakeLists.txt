@@ -6,7 +6,6 @@ add_library(DynamicGui::DynamicGui ALIAS DynamicGui)
 
 target_link_libraries(DynamicGui PUBLIC
                       Qt5::Core
-                      Qt5::Core
                       Qt5::QuickControls2
                       Qt5::Qml
                       Qt5::Widgets
