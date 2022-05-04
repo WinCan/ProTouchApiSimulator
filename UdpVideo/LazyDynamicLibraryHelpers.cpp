@@ -37,7 +37,6 @@ DynamicLibrariesStorage& DynamicLibrariesStorage::instance()
 DynamicLibrariesStorage& DynamicLibrariesStorage::addPath(const QString& path)
 {
     AddDllDirectory(path.toStdWString().c_str());
-    std::wcerr << L"adding path" <<  path.toStdWString() << std::endl;
     return instance();
 }
 
