@@ -1,96 +1,22 @@
 #include "UdpVideoController.h"
-#include <windows.h>
-#include <libloaderapi.h>
 #include <QFile>
 #include <iostream>
-#include <QCoreApplication>
-
-namespace
-{
-extern "C"
-{
-enum GstState
-{
-    GST_STATE_NULL = 1,
-    GST_STATE_PLAYING = 4
-};
-enum GstStateChangeReturn
-{
-    last = 3
-};
-
-using GstElement = void;
-using GError = void;
-int (*gst_init)(int*,char***) = nullptr;
-GstElement* (*gst_parse_launch)(const char*, GError**) = nullptr;
-GstStateChangeReturn (*gst_element_set_state)(GstElement*, GstState) = nullptr;
-void (*gst_object_unref)(void*) = nullptr;
-} //extern C
-} //anon ns
-
-void check(const char* dll)
-{
-    if(NULL == LoadLibraryEx(dll, NULL, LOAD_LIBRARY_SEARCH_USER_DIRS))
-    {
-        auto error = GetLastError();
-        std::cerr << "Failed to load: " << dll << " : " << error << std::endl;
-    }
-}
+#include "GStreamer.h"
 
 struct UdpVideoController::Pimpl
 {
     Pimpl()
     {
-        if(QFile::exists("./bin/libgstreamer-1.0-0.dll"))
+        tryLoadGstreamerLibraries();
+        if(gst_init.isResolved())
         {
-            auto actualPath = QCoreApplication::applicationDirPath().replace('/', '\\').toStdWString();
-            AddDllDirectory((actualPath + L"\\bin\\").c_str());
-            AddDllDirectory((actualPath + L"\\lib\\gstreamer-1.0\\").c_str());
-
-            loadLibrary("libintl-8.dll");
-            loadLibrary("ADVAPI32.dll");
-            loadLibrary("dnsapi.dll");
-            loadLibrary("IPHLPAPI.DLL");
-            loadLibrary("KERNEL32.dll");
-            loadLibrary("msvcrt.dll");
-            loadLibrary("ole32.dll");
-            loadLibrary("SHELL32.dll");
-            loadLibrary("SHLWAPI.dll");
-            loadLibrary("USER32.dll");
-            loadLibrary("WS2_32.dll");
-            loadLibrary("zlib1.dll");
-            loadLibrary("libglib-2.0-0.dll");
-            loadLibrary("libgmodule-2.0-0.dll");
-            loadLibrary("libgobject-2.0-0.dll");
-            loadLibrary("libgstvideotestsrc.dll");
-            loadLibrary("libgstcoreelements.dll");
-            loadLibrary("libglib-2.0-0.dll");
-            loadLibrary("libgstbase-1.0-0.dll");
-            loadLibrary("liborc-0.4-0.dll");
-            loadLibrary("libgstvideo-1.0-0.dll");
-            loadLibrary("libgstx264.dll");
-            loadLibrary("libgstvideoparsersbad.dll");
-            loadLibrary("libgstrtp.dll");
-            loadLibrary("libgstudp.dll");
-
-            gstreamerHandle = loadLibrary("libgstreamer-1.0-0.dll");
-
-            if(gstreamerHandle != NULL)
-            {
-#define RESOLVE(name) name = reinterpret_cast<decltype(name)>(GetProcAddress(gstreamerHandle, #name))
-                RESOLVE(gst_init);
-                RESOLVE(gst_parse_launch);
-                RESOLVE(gst_element_set_state);
-                RESOLVE(gst_object_unref);
-#undef RESOLVE
-                gst_init(nullptr, nullptr);
-            }
+            gst_init(nullptr, nullptr);
         }
     }
-    void startPipeline(const QString& beginning, const QString& ip, const QString& port)
+    void startPipeline(const QString& ip, const QString& port)
     {
-        auto pipeline = beginning +
-                        " is-live=true do-timestamp=true "
+        auto pipeline = "videotestsrc is-live=true do-timestamp=true "
+                        "! video/x-raw,width=1280,height=720 "
                         "! autovideoconvert "
                         "! queue leaky=downstream "
                         "! x264enc tune=zerolatency "
@@ -113,36 +39,11 @@ struct UdpVideoController::Pimpl
 
     bool hasGstreamer()
     {
-        return gstreamerHandle != NULL;
+        return gst_init.isResolved()
+           and gst_parse_launch.isResolved()
+           and gst_element_set_state.isResolved();
     }
-    HMODULE WINAPI gstreamerHandle = NULL;
     GstElement* gstPipeline = nullptr;
-    HMODULE loadLibrary(const char* dllName)
-    {
-        HMODULE module = LoadLibraryEx(dllName, NULL, LOAD_LIBRARY_SEARCH_USER_DIRS);
-        if(module == NULL)
-        {
-            //for some reason "DSNAPI.DLL" doesnt load via LoadLibraryEx, dunno why, so here is fallback
-            module = LoadLibrary(dllName);
-        }
-        if(module != NULL)
-        {
-            loadedDlls.push_back(module);
-        }
-        else
-        {
-            std::cerr << "Failed to load " << dllName << ", application may not work as expected" << std::endl;
-        }
-        return module;
-    }
-    std::vector<HMODULE> loadedDlls;
-    ~Pimpl()
-    {
-        for(HMODULE module : loadedDlls)
-        {
-            FreeLibrary(module);
-        }
-    }
 };
 
 UdpVideoController::UdpVideoController(QObject* parent)
@@ -153,7 +54,9 @@ UdpVideoController::UdpVideoController(QObject* parent)
 
 void UdpVideoController::startPipeline(const QString &beginning, const QString& ip, const QString& port)
 {
-    return pimpl->startPipeline(beginning, ip, port);
+    //autovideosrc's dlls are probably not deployed with PT, so forced videotestsrc
+    (void)beginning;
+    return pimpl->startPipeline(ip, port);
 }
 
 void UdpVideoController::stop()
