@@ -18,15 +18,13 @@
           <does-not-equal name="env.BUILD_IS_PERSONAL" value="true" />
         </conditions>
         <parameters>
-          <param name="script.content"><![CDATA[#!/bin/bash
-
-set str1='%teamcity.build.branch%%'
+          <param name="script.content"><![CDATA[set str1='%teamcity.build.branch%%'
 if not "x%%str1:tag=%%" == "x%%str1%%" ( 
     python --version
     python3 publish.py ./ProTouchApiSimulator.zip
 )
-
-python3 publish.py ../ProTouchApiSimulator.zip]]></param>
+mv ../build.zip ../ProTouchApiSimulator.zip
+python publish.py ../ProTouchApiSimulator.zip]]></param>
           <param name="teamcity.build.workingDir" value="publication" />
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
