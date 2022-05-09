@@ -102,7 +102,9 @@ if __name__ == '__main__':
         </parameters>
       </runner>
     </build-runners>
-    <vcs-settings />
+    <vcs-settings>
+      <vcs-entry-ref root-id="ProTouchApiSimulator_ProTouchApiSimulator" />
+    </vcs-settings>
     <requirements />
     <build-triggers>
       <build-trigger id="TRIGGER_1" type="vcsTrigger">
