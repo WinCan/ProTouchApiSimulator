@@ -132,7 +132,7 @@ if __name__ == '__main__':
       </extension>
     </build-extensions>
     <artifact-dependencies>
-      <dependency id="ARTIFACT_DEPENDENCY_12" sourceBuildTypeId="ProTouchApiSimulator_Windows_BuildX86" cleanDestination="true">
+      <dependency id="ARTIFACT_DEPENDENCY_12" sourceBuildTypeId="ProTouchApiSimulator_Windows_BuildX86" cleanDestination="false">
         <revisionRule name="lastSuccessful" revision="latest.lastSuccessful" />
         <artifact sourcePath="build.zip" />
       </dependency>
