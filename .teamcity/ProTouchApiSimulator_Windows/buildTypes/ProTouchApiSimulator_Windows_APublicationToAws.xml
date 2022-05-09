@@ -134,10 +134,6 @@ if __name__ == '__main__':
       </extension>
     </build-extensions>
     <artifact-dependencies>
-      <dependency id="ARTIFACT_DEPENDENCY_1" sourceBuildTypeId="ProTouch3_Linux_Builder" cleanDestination="false">
-        <revisionRule name="lastSuccessful" revision="latest.lastSuccessful" branch="%teamcity.build.branch%" />
-        <artifact sourcePath="*.deb  =&gt; publication&#xD;&#xA;" />
-      </dependency>
       <dependency id="ARTIFACT_DEPENDENCY_3" sourceBuildTypeId="ProTouch3_Windows_Builder" cleanDestination="false">
         <revisionRule name="lastSuccessful" revision="latest.lastSuccessful" branch="%teamcity.build.branch%" />
         <artifact sourcePath="*.exe =&gt; publication&#xD;&#xA;" />
