@@ -15,9 +15,24 @@ Window {
     minimumHeight: 800
     color: Design.backgroundColor
 
+    Button
+    {
+        id: docsButton
+        width: 200
+        text: "Documentation"
+        height: bar.height
+        anchors.top: parent.top
+        anchors.right: parent.right
+        onClicked: {
+            Qt.openUrlExternally("https://github.com/WinCan/ProTouchApiSimulator/raw/main/ProTouch%20API%20Documentation.pdf")
+        }
+    }
+
     TabBar
     {
         anchors.top: parent.top
+        anchors.right: docsButton.left
+        anchors.left: parent.left
         id: bar
         TabButton
         {
