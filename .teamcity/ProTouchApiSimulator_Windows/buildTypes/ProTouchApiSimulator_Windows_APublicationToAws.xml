@@ -56,8 +56,8 @@ FROM = EMAIL
 SERVER = "smtp.office365.com"
 PORT = 587
 
-SUBJECT = """[Teamcity_Krakow][ProTouch3]Developer release"""
-TEXT = """Hello guys. We have a new release of development version of ProTouch3"""
+SUBJECT = """[Teamcity_Krakow][ProTouchApiSimulator] Release"""
+TEXT = """Hello guys. We have a new release of ProTouchApiSimulator"""
 
 
 def send_mail(tag_revision):
@@ -70,16 +70,10 @@ def send_mail(tag_revision):
     <head></head>
     <body>
         {} <br>
-        We have a new release of ProTouch3: <strong>{}</strong><br>
-        <a href="{}">Download ProTouch3 for Ubuntu/debian from TeamCityKrakow</a><br> 
-        <a href="{}">Download ProTouch3 for Android 7+ from TeamCityKrakow</a><br> 
-        <a href="{}">Download ProTouch3 for Windows from TeamCityKrakow</a><br> 
+        We have a new release of ProTouchApiSimulator: <strong>{}</strong><br>
     </body>
     </html>""".format(TEXT,
-                      tag_revision,
-                      "http://172.20.45.41:8111/repository/download/ProTouch3_Linux_Builder/%dep.ProTouch3_Linux_Builder.teamcity.build.id%:id/protouch.deb",
-                      "http://172.20.45.41:8111/repository/download/ProTouch3_Linux_BuilderAndroid/%dep.ProTouch3_Linux_BuilderAndroid.teamcity.build.id%:id/protouch.apk",
-                      "http://172.20.45.41:8111/repository/download/ProTouch3_Windows_Builder/%dep.ProTouch3_Windows_Builder.teamcity.build.id%:id/ProTouchSetup.exe")
+                      tag_revision)
     # msg.attach(MIMEText(TEXT, 'plain'))
     msg.attach(MIMEText(message, 'html'))
 
