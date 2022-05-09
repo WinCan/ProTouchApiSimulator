@@ -11,7 +11,8 @@
     </disabled-settings>
     <parameters>
       <param name="MAIL_ProTouch_List" value="&quot;i.konstantinovskyi@wincan.com&quot;" />
-      <param name="env.AES_PASSWORD" value="3477875c-5666-4855-8aa2-6ffdc2dab031" spec="password display='hidden' readOnly='true'" />
+      <param name="env.AES_PASSWORD" value="credentialsJSON:3477875c-5666-4855-8aa2-6ffdc2dab031" spec="password display='hidden' readOnly='true'" />
+      <param name="env.AWS_ACCESS_KEY_ID" value="AKIAI6FHEMZ56DUCTAJQ" />
     </parameters>
     <build-runners>
       <runner id="RUNNER_1" name="Publish to AWS" type="simpleRunner">
