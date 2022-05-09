@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="c9711e8a-3668-4b1d-8ad4-95d2d37241d4" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2021.1/project-config.xsd">
+  <name>A Publication To AWS</name>
+  <description>uploading packages to AWS</description>
+  <settings>
+    <options>
+      <option name="artifactRules" value="publication&#xA;-:__pycache__" />
+    </options>
+    <disabled-settings>
+      <setting-ref ref="TRIGGER_2" />
+    </disabled-settings>
+    <parameters />
+    <build-runners>
+      <runner id="RUNNER_1" name="Publish to AWS" type="simpleRunner">
+        <conditions>
+          <does-not-equal name="env.BUILD_IS_PERSONAL" value="true" />
+        </conditions>
+        <parameters>
+          <param name="script.content"><![CDATA[#!/bin/bash
+
+str1='%teamcity.build.branch%'
+
+if [ -z "${str1##*tag*}" ] ;then
+    python --version
+    python3 publish_dev.py --wininstaller ProTouchSetup.exe --debpackage ProTouch.deb --apkpackage protouch.apk --reseller WinCan
+    python3 publish_dev.py --wininstaller MiniCamSetup.exe --debpackage MiniCam.deb --apkpackage protouch.apk --reseller MiniCam
+
+fi]]></param>
+          <param name="teamcity.build.workingDir" value="publication" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_2" name="Send mail on tag" type="python">
+        <conditions>
+          <does-not-equal name="env.BUILD_IS_PERSONAL" value="true" />
+        </conditions>
+        <parameters>
+          <param name="bitness" value="*" />
+          <param name="python-exe" value="%AnyPython%" />
+          <param name="python-kind" value="*" />
+          <param name="python-script-code"><![CDATA[import re
+import smtplib
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+
+# must be a list
+#TO = ["p.paziewski@wincan.com", "w.plewako@wincan.com"]
+TO = [%MAIL_ProTouch_List%]
+
+EMAIL, PASS= "%MAIL_Credentials%".split(':')
+FROM = EMAIL
+
+SERVER = "smtp.office365.com"
+PORT = 587
+
+SUBJECT = """[Teamcity_Krakow][ProTouch3]Developer release"""
+TEXT = """Hello guys. We have a new release of development version of ProTouch3"""
+
+
+def send_mail(tag_revision):
+    msg = MIMEMultipart()
+    msg['From'] = FROM
+    msg['To'] = str(", ".join(TO))
+    msg['Subject'] = SUBJECT
+    message = """
+    <html>
+    <head></head>
+    <body>
+        {} <br>
+        We have a new release of ProTouch3: <strong>{}</strong><br>
+        <a href="{}">Download ProTouch3 for Ubuntu/debian from TeamCityKrakow</a><br> 
+        <a href="{}">Download ProTouch3 for Android 7+ from TeamCityKrakow</a><br> 
+        <a href="{}">Download ProTouch3 for Windows from TeamCityKrakow</a><br> 
+    </body>
+    </html>""".format(TEXT,
+                      tag_revision,
+                      "http://172.20.45.41:8111/repository/download/ProTouch3_Linux_Builder/%dep.ProTouch3_Linux_Builder.teamcity.build.id%:id/protouch.deb",
+                      "http://172.20.45.41:8111/repository/download/ProTouch3_Linux_BuilderAndroid/%dep.ProTouch3_Linux_BuilderAndroid.teamcity.build.id%:id/protouch.apk",
+                      "http://172.20.45.41:8111/repository/download/ProTouch3_Windows_Builder/%dep.ProTouch3_Windows_Builder.teamcity.build.id%:id/ProTouchSetup.exe")
+    # msg.attach(MIMEText(TEXT, 'plain'))
+    msg.attach(MIMEText(message, 'html'))
+
+    # Send the mail
+    server = smtplib.SMTP(SERVER, port=PORT)
+    server.starttls()
+    server.login(user=EMAIL, password=PASS)
+    server.sendmail(FROM, TO, msg.as_string())
+    server.quit()
+    print(msg)
+
+
+if __name__ == '__main__':
+    if 'tags' in '%teamcity.build.branch%':
+        # tag_revision="%teamcity.build.branch%"[5:]+"-"+"%build.vcs.number%"[:6]
+        tag_revision="%teamcity.build.branch%"[5:]
+
+        send_mail(tag_revision)
+    else:
+        print('BUILD not TAGed. Please tag build for sending mail')]]></param>
+          <param name="python-script-mode" value="code" />
+          <param name="python-ver" value="*" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="ProTouchApiSimulator_Windows_Protouch3" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers>
+      <build-trigger id="TRIGGER_1" type="vcsTrigger">
+        <parameters>
+          <param name="branchFilter"><![CDATA[+:tags/*
+-:*]]></param>
+          <param name="quietPeriodMode" value="USE_DEFAULT" />
+        </parameters>
+      </build-trigger>
+      <build-trigger id="TRIGGER_2" type="buildDependencyTrigger">
+        <parameters>
+          <param name="afterSuccessfulBuildOnly" value="true" />
+          <param name="branchFilter" value="+:tags/*" />
+          <param name="dependsOn" value="ProTouch3_Linux_BuilderAndroid" />
+        </parameters>
+      </build-trigger>
+    </build-triggers>
+    <build-extensions>
+      <extension id="BUILD_EXT_15" type="commit-status-publisher">
+        <parameters>
+          <param name="github_authentication_type" value="token" />
+          <param name="github_host" value="https://api.github.com" />
+          <param name="publisherId" value="githubStatusPublisher" />
+          <param name="secure:github_access_token" value="credentialsJSON:56ffcc70-5d73-4152-8922-859c6b45e2f5" />
+          <param name="vcsRootId" value="ProTouchApiSimulator_Windows_Protouch3" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <artifact-dependencies>
+      <dependency id="ARTIFACT_DEPENDENCY_2" sourceBuildTypeId="ProTouch3_Linux_BuilderAndroid" cleanDestination="false">
+        <revisionRule name="lastSuccessful" revision="latest.lastSuccessful" branch="%teamcity.build.branch%" />
+        <artifact sourcePath="protouch.apk =&gt; publication" />
+      </dependency>
+      <dependency id="ARTIFACT_DEPENDENCY_1" sourceBuildTypeId="ProTouch3_Linux_Builder" cleanDestination="false">
+        <revisionRule name="lastSuccessful" revision="latest.lastSuccessful" branch="%teamcity.build.branch%" />
+        <artifact sourcePath="*.deb  =&gt; publication&#xD;&#xA;" />
+      </dependency>
+      <dependency id="ARTIFACT_DEPENDENCY_3" sourceBuildTypeId="ProTouch3_Windows_Builder" cleanDestination="false">
+        <revisionRule name="lastSuccessful" revision="latest.lastSuccessful" branch="%teamcity.build.branch%" />
+        <artifact sourcePath="*.exe =&gt; publication&#xD;&#xA;" />
+      </dependency>
+    </artifact-dependencies>
+    <cleanup />
+  </settings>
+</build-type>
+
