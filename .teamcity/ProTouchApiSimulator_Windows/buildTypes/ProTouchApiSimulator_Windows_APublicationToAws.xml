@@ -9,7 +9,9 @@
     <disabled-settings>
       <setting-ref ref="TRIGGER_2" />
     </disabled-settings>
-    <parameters />
+    <parameters>
+      <param name="MAIL_ProTouch_List" value="&quot;i.konstantinovskyi@wincan.com&quot;" />
+    </parameters>
     <build-runners>
       <runner id="RUNNER_1" name="Publish to AWS" type="simpleRunner">
         <conditions>
