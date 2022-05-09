@@ -22,8 +22,7 @@ str1='%teamcity.build.branch%'
 
 if [ -z "${str1##*tag*}" ] ;then
     python --version
-    python3 publish_dev.py --wininstaller ProTouchSetup.exe --debpackage ProTouch.deb --apkpackage protouch.apk --reseller WinCan
-    python3 publish_dev.py --wininstaller MiniCamSetup.exe --debpackage MiniCam.deb --apkpackage protouch.apk --reseller MiniCam
+    python3 publish.py ./ProTouchApiSimulator.zip
 
 fi]]></param>
           <param name="teamcity.build.workingDir" value="publication" />
