@@ -23,8 +23,8 @@ if not "x%%str1:tag=%%" == "x%%str1%%" (
     python --version
     python3 publish.py ./ProTouchApiSimulator.zip
 )
-mv ../build.zip ../ProTouchApiSimulator.zip
-python publish.py ../ProTouchApiSimulator.zip]]></param>
+mv ../build.zip ProTouchApiSimulator.zip
+python publish.py ProTouchApiSimulator.zip]]></param>
           <param name="teamcity.build.workingDir" value="publication" />
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
