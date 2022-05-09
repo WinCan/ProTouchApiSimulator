@@ -20,13 +20,12 @@
         <parameters>
           <param name="script.content"><![CDATA[#!/bin/bash
 
-str1='%teamcity.build.branch%'
-
-if [ -z "${str1##*tag*}" ] ;then
+set str1='%teamcity.build.branch%%'
+if not "x%%str1:tag=%%" == "x%%str1%%" ( 
     python --version
     python3 publish.py ./ProTouchApiSimulator.zip
+)
 
-fi
 python3 publish.py ../ProTouchApiSimulator.zip]]></param>
           <param name="teamcity.build.workingDir" value="publication" />
           <param name="teamcity.step.mode" value="default" />
