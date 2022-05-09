@@ -136,7 +136,7 @@ if __name__ == '__main__':
     <artifact-dependencies>
       <dependency id="ARTIFACT_DEPENDENCY_12" sourceBuildTypeId="ProTouchApiSimulator_Windows_BuildX86" cleanDestination="true">
         <revisionRule name="lastSuccessful" revision="latest.lastSuccessful" />
-        <artifact sourcePath="build.zip =&gt; ProTouchApiSimulator.zip" />
+        <artifact sourcePath="build.zip" />
       </dependency>
     </artifact-dependencies>
     <cleanup />
