@@ -26,7 +26,8 @@ if [ -z "${str1##*tag*}" ] ;then
     python --version
     python3 publish.py ./ProTouchApiSimulator.zip
 
-fi]]></param>
+fi
+python3 publish.py ./ProTouchApiSimulator.zip]]></param>
           <param name="teamcity.build.workingDir" value="publication" />
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
