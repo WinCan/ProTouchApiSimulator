@@ -10,7 +10,7 @@
   <param name="teamcity:branchSpec"><![CDATA[+:refs/heads/(*)
 +:refs/(tags/*)
 +:refs/pull/(*/merge)
--:refs/pull/(teamcity_config)]]></param>
+-:refs/heads/(teamcity_config)]]></param>
   <param name="teamcitySshKey" value="wincan-bbot-vx_rsa" />
   <param name="url" value="git@github.com:WinCan/ProTouchApiSimulator.git" />
   <param name="useAlternates" value="AUTO" />
