@@ -10,7 +10,8 @@
       <setting-ref ref="TRIGGER_2" />
     </disabled-settings>
     <parameters>
-      <param name="MAIL_ProTouch_List" value="&quot;i.konstantinovskyi@wincan.com&quot;" />
+      <param name="MAIL_ProTouch_List"><![CDATA["w.plewako@wincan.com", "p.paziewski@wincan.com",
+"i.konstantinovskyi@wincan.com"]]></param>
       <param name="env.AES_PASSWORD" value="credentialsJSON:3477875c-5666-4855-8aa2-6ffdc2dab031" spec="password display='hidden' readOnly='true'" />
       <param name="env.AWS_ACCESS_KEY_ID" value="credentialsJSON:f694c7f3-eb73-4971-8a22-1469e1beedf9" spec="password display='hidden' readOnly='true'" />
       <param name="env.AWS_SECRET_ACCESS_KEY" value="credentialsJSON:aa5b575e-995c-4e8a-b274-28547778abe0" spec="password display='hidden' readOnly='true'" />
