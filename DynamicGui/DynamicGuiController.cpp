@@ -1,8 +1,7 @@
 #include "DynamicGuiController.h"
 #include <QStringLiteral>
 
-constexpr static const char PUSH_ADDR[] = "tcp://127.0.0.1:52943";
-constexpr static const char PULL_ADDR[] = "tcp://127.0.0.1:52944";
+static const QString ROUTER_ADDR = "tcp://%1:52943";
 
 DynamicGuiController::DynamicGuiController(QObject* parent)
     : QObject{parent}
@@ -11,14 +10,14 @@ DynamicGuiController::DynamicGuiController(QObject* parent)
 {
 }
 
-void DynamicGuiController::enable()
+void DynamicGuiController::enable(const QString& ip)
 {
-    dealer.connect(PUSH_ADDR);
+    dealer.connect(ROUTER_ADDR.arg(ip).toStdString());
 }
 
-void DynamicGuiController::disable()
+void DynamicGuiController::disable(const QString& ip)
 {
-    dealer.disconnect(PUSH_ADDR);
+    dealer.disconnect(ROUTER_ADDR.arg(ip).toStdString());
 }
 
 

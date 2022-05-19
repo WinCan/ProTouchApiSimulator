@@ -20,34 +20,49 @@ Rectangle {
         id: topBar
         width: dynamicUi.width
         height: 50
-        Text
+
+        TextField
         {
-            id: enableTxt
-            text: "Enable"
+            id: dynamicUiIp
+            text: "127.0.0.1"
             anchors.left: topBar.left
             anchors.leftMargin: 20
             anchors.top: topBar.top
+            anchors.topMargin: 10
+            anchors.bottomMargin: 10
             anchors.bottom: topBar.bottom
             verticalAlignment: Text.AlignVCenter
+            width: 120
+            enabled: ! isEnabledSwitch.checked
         }
 
         Switch
         {
             id: isEnabledSwitch
-            anchors.left: enableTxt.right
-            anchors.top: enableTxt.top
-            anchors.bottom: enableTxt.bottom
+            anchors.left: dynamicUiIp.right
+            anchors.top: dynamicUiIp.top
+            anchors.bottom: dynamicUiIp.bottom
             checked: false
             onCheckedChanged: {
                 if(checked)
                 {
-                    controller.enable()
+                    controller.enable(dynamicUiIp.text)
                 }
                 else
                 {
-                    controller.disable()
+                    controller.disable(dynamicUiIp.text)
                 }
             }
+        }
+
+        Text
+        {
+            id: enableTxt
+            text: "Enable"
+            anchors.left: isEnabledSwitch.right
+            anchors.top: topBar.top
+            anchors.bottom: topBar.bottom
+            verticalAlignment: Text.AlignVCenter
         }
         Button
         {
