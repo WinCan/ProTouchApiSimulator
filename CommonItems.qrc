@@ -8,5 +8,6 @@
         <file>CommonItems/qmldir</file>
         <file>CommonItems/FreeTextBox.qml</file>
         <file>CommonItems/VideoMessageBox.qml</file>
+        <file>CommonItems/Version.qml</file>
     </qresource>
 </RCC>
