@@ -29,6 +29,10 @@ find_package(Qt5 COMPONENTS Widgets Qml Quick QmlImportScanner QuickControls2 Gu
 
 add_subdirectory(DynamicGui)
 add_subdirectory(UdpVideo)
+
+execute_process(
+    COMMAND setVersionWin.bat
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 	
 add_executable(ProTouchApiSimulator
                WIN32

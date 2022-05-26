@@ -7,6 +7,7 @@ import CommonItems 1.0
 import design 1.0
 
 Window {
+    id: window
     visible: true
     width: 1340
     height: 850
@@ -77,5 +78,11 @@ Window {
             }
         }
 
+    }
+
+    Version {
+        anchors.right: window.contentItem.right
+        anchors.bottom: window.contentItem.bottom
+        anchors.rightMargin: 3
     }
 }
