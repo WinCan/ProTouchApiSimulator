@@ -102,7 +102,7 @@ Rectangle {
                 editable: true
                 value: 1
                 from: 1
-                to: 10
+                to: 100
             }
             ComboBox {
                 id: textColorInput
