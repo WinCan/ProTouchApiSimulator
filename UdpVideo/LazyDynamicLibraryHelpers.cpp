@@ -1,12 +1,14 @@
 #include "LazyDynamicLibraryHelpers.h"
+#ifdef Q_OS_WIN64
 #include <windows.h>
+#endif
 #include <QFile>
-#include <iostream>
 #include <QCoreApplication>
 #include <memory>
 #include <QHash>
 #include <iostream>
 
+#ifdef Q_OS_WIN64
 namespace
 {
 struct Pimpl
@@ -27,6 +29,7 @@ static Pimpl& storage()
     return *instance;
 }
 }
+#endif
 
 DynamicLibrariesStorage& DynamicLibrariesStorage::instance()
 {
@@ -36,12 +39,17 @@ DynamicLibrariesStorage& DynamicLibrariesStorage::instance()
 
 DynamicLibrariesStorage& DynamicLibrariesStorage::addPath(const QString& path)
 {
+#ifdef Q_OS_WIN64
     AddDllDirectory(path.toStdWString().c_str());
+#else
+    Q_UNUSED(path);
+#endif
     return instance();
 }
 
 DynamicLibrariesStorage& DynamicLibrariesStorage::load(const QString& name)
 {
+#ifdef Q_OS_WIN64
     auto stdStr = (name + ".dll").toStdString();
     HMODULE module = LoadLibraryEx(stdStr.c_str(), NULL, LOAD_LIBRARY_SEARCH_USER_DIRS);
     if(module == NULL)
@@ -57,16 +65,23 @@ DynamicLibrariesStorage& DynamicLibrariesStorage::load(const QString& name)
     {
         std::cerr << "Failed to load " << stdStr << ", application may not work as expected" << std::endl;
     }
+#else
+    Q_UNUSED(name);
+#endif
     return instance();
 }
 
 DynamicLibrariesStorage& DynamicLibrariesStorage::resolve(LazyDynamicFunctionBase& func)
 {
+#ifdef Q_OS_WIN64
     auto module = storage().modules.value(func.library, NULL);
     if(module != NULL)
     {
         func.handle = reinterpret_cast<void*>(GetProcAddress(module, func.name));
     }
+#else
+    Q_UNUSED(func);
+#endif
     return instance();
 }
 

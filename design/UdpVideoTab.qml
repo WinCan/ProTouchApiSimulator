@@ -20,7 +20,9 @@ Rectangle {
         Component {
             id: noGstreamer
             Text {
-                text: "Missing GStreamer libraries. To enable creating testing UDP stream, move this .exe directory above ProTouch.exe, it's usually C:/Program Files/WinCan/ProTouch."
+                text: Qt.platform.os === "windows"
+                      ? "Missing GStreamer libraries. To enable creating testing UDP stream, move this .exe directory above ProTouch.exe, it's usually C:/Program Files/WinCan/ProTouch."
+                      : "This functionality is supported only on Windows OS"
             }
         }
         Component {

@@ -31,8 +31,12 @@ add_subdirectory(DynamicGui)
 add_subdirectory(UdpVideo)
 
 execute_process(
-    COMMAND setVersionWin.bat
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+    COMMAND git rev-parse --short HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE PT_API_GIT_VERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+file(WRITE CommonItems/Version.qml "import QtQuick 2.0; Text { text:'${PT_API_GIT_VERSION}'}")
 	
 add_executable(ProTouchApiSimulator
                WIN32
