@@ -27,7 +27,7 @@ g++ --version]]></param>
 mkdir -p build 
 cd build 
 
-cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release
+cmake ../ProTouchApiSimulator -G"Ninja" -DCMAKE_BUILD_TYPE=Release
 ninja install || exit 1
 
 ntldd ProTouchApiSimulator]]></param>
