@@ -28,7 +28,8 @@ mkdir -p build
 cd build 
 
 cmake ../ProTouchApiSimulator -G"Ninja" -DCMAKE_BUILD_TYPE=Release
-ninja install || exit 1
+ninja 
+#ninja install || exit 1
 
 ldd ProTouchApiSimulator]]></param>
           <param name="teamcity.step.mode" value="default" />
