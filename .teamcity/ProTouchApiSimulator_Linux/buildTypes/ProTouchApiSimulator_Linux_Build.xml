@@ -24,13 +24,13 @@ g++ --version]]></param>
       <runner id="RUNNER_56" name="Compilation cmake static" type="simpleRunner">
         <parameters>
           <param name="script.content"><![CDATA[rm -rf build
-mkdir build 
+mkdir -p build 
 cd build 
 
-cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release  -DCMAKE_PREFIX_PATH="c:\msys2_pt3\mingw64\qt5-static"
+cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release
 ninja install || exit 1
 
-ntldd ProTouchApiSimulator.exe]]></param>
+ntldd ProTouchApiSimulator]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
         </parameters>
