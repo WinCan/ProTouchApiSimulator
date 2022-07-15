@@ -60,6 +60,7 @@ target_link_libraries(ProTouchApiSimulator
 
 
 if(CMAKE_BUILD_TYPE MATCHES Release)
+    if(WIN32)
         target_link_libraries(ProTouchApiSimulator
                               PUBLIC
                               -static
@@ -67,6 +68,7 @@ if(CMAKE_BUILD_TYPE MATCHES Release)
                               -static-libstdc++
                               z
                               zstd)
+    endif()
 endif()
 
 
