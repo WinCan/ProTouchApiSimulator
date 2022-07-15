@@ -5,6 +5,7 @@
 #include <QDirIterator>
 #include <QResource>
 #include <QCoreApplication>
+#include <QQmlEngine>
 
 void PluginLoader::addPlugins(QObject* tabBar, QObject* stackLayout, QObject* msgGen)
 {

@@ -4,8 +4,6 @@
 #include <messagegenerator.h>
 #include <DynamicGui/DynamicGuiController.h>
 #include <UdpVideo/UdpVideoController.h>
-#include "windows.h"
-#include <iostream>
 #include "PluginLoader.h"
 #include <QFile>
 
@@ -27,17 +25,11 @@ int main(int argc, char *argv[])
     engine.addImportPath(QStringLiteral("qrc:/"));
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url, &engine](QObject *obj, const QUrl &objUrl) {
-        PluginLoader::qmlEngine = &engine;
+                     &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
 
-    std::cerr << QFile::exists("qrc:///plugins/MiniCamApi/TabBarEntry.qml");
-    std::cerr << QFile::exists(":/plugins/MiniCamApi/TabBarEntry.qml");
-
-    std::cerr << QFile::exists(":/main.qml");
-    std::cerr << QFile::exists("qrc:/main.qml");
     return app.exec();
 }
