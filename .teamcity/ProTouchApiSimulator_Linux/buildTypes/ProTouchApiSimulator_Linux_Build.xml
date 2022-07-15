@@ -4,6 +4,7 @@
   <description />
   <settings>
     <parameters>
+      <param name="docker_container_name" value="arch_20_07_05" />
       <param name="env.Path" value="C:\!tools\python372\;C:\!tools\python372\lib\site-packages;C:\msys2_pt3\usr\lib\p7zip;C:\msys2_pt3\mingw64\bin;C:\msys2_pt3\mingw64\lib;C:\msys2_pt3\usr\bin;C:\Windows\System32;C:\Program Files\Git\bin\;" />
     </parameters>
     <build-runners>
