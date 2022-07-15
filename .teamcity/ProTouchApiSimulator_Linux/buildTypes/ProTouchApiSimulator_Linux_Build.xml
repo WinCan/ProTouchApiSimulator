@@ -24,7 +24,7 @@ g++ --version]]></param>
       <runner id="RUNNER_56" name="Compilation cmake" type="simpleRunner">
         <parameters>
           <param name="plugin.docker.imageId" value="%docker_container_name%" />
-          <param name="script.content"><![CDATA[cd deployment_linux/
+          <param name="script.content"><![CDATA[cd ProTouchApiSimulator/deployment_linux/
 
 cmake .. -G"Ninja" -DCMAKE_BUILD_TYPE=Release
 ninja 
