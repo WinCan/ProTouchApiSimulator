@@ -10,6 +10,7 @@
     <build-runners>
       <runner id="RUNNER_15" name="check" type="simpleRunner">
         <parameters>
+          <param name="plugin.docker.imageId" value="%docker_container_name%" />
           <param name="script.content"><![CDATA[qmake -v
 cmake --version
 g++ --version]]></param>
