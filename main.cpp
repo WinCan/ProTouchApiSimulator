@@ -4,6 +4,10 @@
 #include <messagegenerator.h>
 #include <DynamicGui/DynamicGuiController.h>
 #include <UdpVideo/UdpVideoController.h>
+#include "windows.h"
+#include <iostream>
+#include "PluginLoader.h"
+#include <QFile>
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +18,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<MessageGenerator>("io.qt.MessageGenerator", 1, 0, "MessageGenerator");
     qmlRegisterType<DynamicGuiController>("io.qt.DynamicGuiController", 1, 0, "DynamicGuiController");
     qmlRegisterType<UdpVideoController>("io.qt.UdpVideoController", 1, 0, "UdpVideoController");
+    qmlRegisterType<PluginLoader>("io.qt.PluginLoader", 1, 0, "PluginLoader");
 
     QQmlApplicationEngine engine;
     engine.addImportPath(QStringLiteral(":/qml/"));
@@ -22,11 +27,17 @@ int main(int argc, char *argv[])
     engine.addImportPath(QStringLiteral("qrc:/"));
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
+                     &app, [url, &engine](QObject *obj, const QUrl &objUrl) {
+        PluginLoader::qmlEngine = &engine;
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
 
+    std::cerr << QFile::exists("qrc:///plugins/MiniCamApi/TabBarEntry.qml");
+    std::cerr << QFile::exists(":/plugins/MiniCamApi/TabBarEntry.qml");
+
+    std::cerr << QFile::exists(":/main.qml");
+    std::cerr << QFile::exists("qrc:/main.qml");
     return app.exec();
 }

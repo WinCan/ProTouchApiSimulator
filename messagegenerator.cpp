@@ -7,20 +7,27 @@
 #include <QJsonDocument>
 #include <QHostAddress>
 
+namespace
+{
+const static QString SETUP = "SETUP";
+}
+
 MessageGenerator::MessageGenerator(QObject *parent) :
     QObject(parent),
     m_client(std::make_unique<TcpClient>("localhost", 8095))
 {
+    setProperty("ApiVersion", 2);
+
     QObject::connect(m_client.get(), &TcpClient::connected, this, [this]()
     {   m_isConnected = true;
         emit connectionChanged();
+        sendCurrentVersion();
     });
     QObject::connect(m_client.get(), &TcpClient::disconnected, this, [this]()
     {   m_isConnected = false;
         emit connectionChanged();
     });
     QObject::connect(m_client.get(), &TcpClient::messageReceived, this, &MessageGenerator::onMessageReceived);
-
 }
 
 void MessageGenerator::onMessageReceived(const QString& message)
@@ -32,6 +39,7 @@ void MessageGenerator::onMessageReceived(const QString& message)
         qDebug() << "message will be ignored.";
         return;
     }
+    emit rawMsgReceived(message);
     QJsonDocument jsonDoc = QJsonDocument::fromJson(message.toUtf8());
     QJsonObject jsonHeader = jsonDoc.object().value("header").toObject();
     QJsonObject jsonPayload = jsonDoc.object().value("payload").toObject();
@@ -121,12 +129,24 @@ void MessageGenerator::sendControlMessage(const QString& msgName, MessageId msgI
     m_client->sendMessage(createMessage(createHeader(msgName, CONTROL, msgId), createControlRespPayload()));
 }
 
-void MessageGenerator::sendMeterCounterValue(const QString& val, const QString& unit)
+void MessageGenerator::sendMeterCounterValue(const QString& val, const QString& unit, bool isLateral)
 {
     static const QString METER_COUNTER_STATUS_IND = "METER_COUNTER_STATUS_IND";
 
     m_client->sendMessage(createMessage(createHeader(METER_COUNTER_STATUS_IND, MONITORING, MESSAGE_ID),
-                                        createMeterCounterStatusIndPayload(val, unit)));
+                                        createMeterCounterStatusIndPayload(val, unit, isLateral)));
+}
+
+static QJsonObject createInclinationPayload(QString value, const QString& unit)
+{
+    return QJsonObject::fromVariantMap({{"value", value.replace(",", ".").toDouble()},
+                                        {"unit", unit}});
+}
+
+void MessageGenerator::sendInclinationValue(const QString &value, const QString &unit)
+{
+    m_client->sendMessage(createMessage(createHeader("INCLINATION_VALUE_STATUS_IND", MONITORING, MESSAGE_ID),
+                                        createInclinationPayload(value, unit)));
 }
 
 void MessageGenerator::sendPerformVideoAction()
@@ -192,11 +212,12 @@ QJsonObject MessageGenerator::createHeader(const QString& msgName, const QString
     return header;
 }
 
-QJsonObject MessageGenerator::createMeterCounterStatusIndPayload(QString val, const QString& unit)
+QJsonObject MessageGenerator::createMeterCounterStatusIndPayload(QString val, const QString& unit, bool isLateral)
 {
     QJsonObject payload;
     payload.insert("value", val.replace(",", ".").toDouble());
     payload.insert("unit", unit);
+    payload.insert("isLateral", isLateral);
     return payload;
 }
 
@@ -239,4 +260,15 @@ QJsonObject MessageGenerator::createPerformVideoActionRespPayload()
     return QJsonObject{
         {"videoAction", m_videoAction}
     };
+}
+
+void MessageGenerator::sendCurrentVersion()
+{
+    m_client->sendMessage(createMessage(createHeader("CHOOSE_API_VERSION", SETUP, MESSAGE_ID),
+                                        QJsonObject::fromVariantMap({{"value", property("ApiVersion")}})));
+}
+
+void MessageGenerator::sendMessage(const QString& msg)
+{
+    m_client->sendMessage(msg.toLatin1());
 }
