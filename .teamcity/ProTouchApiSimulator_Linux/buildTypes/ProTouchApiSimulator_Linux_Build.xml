@@ -6,7 +6,6 @@
     <disabled-settings>
       <setting-ref ref="RUNNER_16" />
       <setting-ref ref="RUNNER_19" />
-      <setting-ref ref="RUNNER_48" />
     </disabled-settings>
     <parameters>
       <param name="env.Path" value="C:\!tools\python372\;C:\!tools\python372\lib\site-packages;C:\msys2_pt3\usr\lib\p7zip;C:\msys2_pt3\mingw64\bin;C:\msys2_pt3\mingw64\lib;C:\msys2_pt3\usr\bin;C:\Windows\System32;C:\Program Files\Git\bin\;" />
@@ -32,19 +31,6 @@ ninja
 #ninja install || exit 1
 
 #ldd ProTouchApiSimulator]]></param>
-          <param name="teamcity.step.mode" value="default" />
-          <param name="use.custom.script" value="true" />
-        </parameters>
-      </runner>
-      <runner id="RUNNER_48" name="Compilation cmake" type="simpleRunner">
-        <parameters>
-          <param name="script.content"><![CDATA[rm -rf build
-mkdir build 
-cd build 
-
-cmake ../ProTouchApiSimulator -DCMAKE_BUILD_TYPE=Release
-ninja || exit 1
-ninja install || exit 1]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
         </parameters>
