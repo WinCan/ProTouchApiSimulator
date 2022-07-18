@@ -26,8 +26,8 @@ g++ --version]]></param>
           <param name="plugin.docker.imageId" value="%docker_container_name%" />
           <param name="script.content"><![CDATA[cd ProTouchApiSimulator/deployment_linux/
 
-echo cmake .. -G"Ninja" -DQt5_DIR=/Qt/$QT_VERSION/gcc_64/ -DCMAKE_BUILD_TYPE=Release
-cmake .. -G"Ninja" -DQt5_DIR=/Qt/$QT_VERSION/gcc_64/ -DCMAKE_BUILD_TYPE=Release
+echo cmake .. -G"Ninja" -DQt5_DIR=/Qt/$QT_VERSION/gcc_64/lib -DCMAKE_BUILD_TYPE=Release
+cmake .. -G"Ninja" -DQt5_DIR=/Qt/$QT_VERSION/gcc_64/lib -DCMAKE_BUILD_TYPE=Release
 ninja 
 bash deploy.sh
 
