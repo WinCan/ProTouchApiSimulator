@@ -60,6 +60,7 @@ target_link_libraries(ProTouchApiSimulator
 
 
 if(CMAKE_BUILD_TYPE MATCHES Release)
+    if(WIN32)
         target_link_libraries(ProTouchApiSimulator
                               PUBLIC
                               -static
@@ -67,12 +68,13 @@ if(CMAKE_BUILD_TYPE MATCHES Release)
                               -static-libstdc++
                               z
                               zstd)
+    endif()
 endif()
 
 
 target_include_directories(ProTouchApiSimulator PUBLIC ./)
 
-set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR})
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/build/bin)
 
 install(TARGETS ProTouchApiSimulator
         CONFIGURATIONS Release

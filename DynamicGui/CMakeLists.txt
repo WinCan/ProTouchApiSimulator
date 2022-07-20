@@ -15,15 +15,17 @@ target_link_libraries(DynamicGui PUBLIC
                       Qt5::QmlWorkerScript
                       zmq)
 if(CMAKE_BUILD_TYPE MATCHES Release)
-    target_compile_definitions(DynamicGui PUBLIC ZMQ_STATIC)
+    if(WIN32)
+        target_compile_definitions(DynamicGui PUBLIC ZMQ_STATIC)
 
-    target_link_libraries(DynamicGui
-                          PUBLIC
-                          rpcrt4
-                          wsock32
-                          ws2_32
-                          sodium
-                          iphlpapi)
+        target_link_libraries(DynamicGui
+                              PUBLIC
+                              rpcrt4
+                              wsock32
+                              ws2_32
+                              sodium
+                              iphlpapi)
+    endif()
 endif()
 
 target_include_directories(DynamicGui PUBLIC .)
