@@ -132,20 +132,19 @@ Rectangle {
             text: "Is lateral:"
         }
 
-        CheckBox
-        {
+        CheckBox {
             id: isMeterCounterLateral
         }
 
-    Button {
-        id: updateMeterCounterBtn
-        text: "Send METER_COUNTER_STATUS_IND "
-        enabled: connectedToServer
-        background: Rectangle {
-            color: Design.defaultButtonColor
+        Button {
+            id: updateMeterCounterBtn
+            text: "Send METER_COUNTER_STATUS_IND "
+            enabled: connectedToServer
+            background: Rectangle {
+                color: Design.defaultButtonColor
+            }
+            onClicked: sendMeterCounterStatusIndClicked()
         }
-        onClicked: sendMeterCounterStatusIndClicked()
-    }
     }
 
     GridLayout {

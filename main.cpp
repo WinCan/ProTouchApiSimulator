@@ -5,7 +5,6 @@
 #include <DynamicGui/DynamicGuiController.h>
 #include <UdpVideo/UdpVideoController.h>
 #include "PluginLoader.h"
-#include <QFile>
 
 int main(int argc, char *argv[])
 {
