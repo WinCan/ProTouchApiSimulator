@@ -12,6 +12,7 @@ Rectangle {
     width: 1340
     height: 800
     color: Design.backgroundColor
+    property alias msgGen : msgGen
 
     MessageGenerator {
         id: msgGen
@@ -64,7 +65,11 @@ Rectangle {
         }
 
         onSendMeterCounterStatusIndClicked: {
-            msgGen.sendMeterCounterValue(meterCounterValue, meterCounterUnit)
+            msgGen.sendMeterCounterValue(meterCounterValue, meterCounterUnit, isMeterCounterLateral)
+        }
+
+        onSendInclinationClicked: {
+            msgGen.sendInclinationValue(inclinationValue, inclinationUnit);
         }
     }
 

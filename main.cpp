@@ -4,6 +4,7 @@
 #include <messagegenerator.h>
 #include <DynamicGui/DynamicGuiController.h>
 #include <UdpVideo/UdpVideoController.h>
+#include "PluginLoader.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<MessageGenerator>("io.qt.MessageGenerator", 1, 0, "MessageGenerator");
     qmlRegisterType<DynamicGuiController>("io.qt.DynamicGuiController", 1, 0, "DynamicGuiController");
     qmlRegisterType<UdpVideoController>("io.qt.UdpVideoController", 1, 0, "UdpVideoController");
+    qmlRegisterType<PluginLoader>("io.qt.PluginLoader", 1, 0, "PluginLoader");
 
     QQmlApplicationEngine engine;
     engine.addImportPath(QStringLiteral(":/qml/"));

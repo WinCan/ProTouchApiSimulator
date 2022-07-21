@@ -11,10 +11,14 @@ Rectangle {
     property alias object: object.text
     property alias value: value.text
     property alias meterCounterValue: meterCounterValue.text
+    property alias inclinationValue: inclinationValue.text
+    property bool isMeterCounterLateral: isMeterCounterLateral.checked
     property string meterCounterUnit
+    property string inclinationUnit
 
     signal sendObjectStatusIndClicked
     signal sendMeterCounterStatusIndClicked
+    signal sendInclinationClicked
 
     anchors.leftMargin: Design.bigMargin
     anchors.topMargin: Design.bigMargin
@@ -80,8 +84,8 @@ Rectangle {
     }
 
     GridLayout {
-        id: meterCounterBox
-        columns: 2
+        id: meterCounterTopBox
+        columns: 3
         rowSpacing: Design.smallMargin
         columnSpacing: Design.smallMargin
         anchors {
@@ -94,33 +98,16 @@ Rectangle {
         }
 
 
-        Label { text: "Meter Counter Value:"}
+        Label { text: "Meter Counter:"}
         TextField {
             id: meterCounterValue
-            width: 10
+            Layout.fillWidth: true
             selectByMouse: true
             validator: RegExpValidator {
                 regExp: /^[0-9]+([,.][0-9])?[0-9]*$/
             }
 
         }
-    }
-
-    GridLayout {
-        id: meterCounterUnitBox
-        columns: 2
-        rowSpacing: Design.smallMargin
-        columnSpacing: Design.smallMargin
-        anchors {
-            top: meterCounterBox.bottom
-            topMargin: Design.mediumMargin
-            left: parent.left
-            leftMargin: Design.mediumMargin
-            right: parent.right
-            rightMargin: Design.mediumMargin
-        }
-
-        Label { text: "Meter Counter Unit:"}
         ComboBox {
             model: ListModel {
                 ListElement { text: "meter" }
@@ -130,22 +117,86 @@ Rectangle {
                 meterCounterUnit = (currentIndex === 0 ? "meter" : "feet")
             }
         }
-
     }
 
-    Button {
-        id: updateMeterCounterBtn
+    GridLayout {
+        id: meterCounterBottomBox
+        columns: 3
         anchors {
-            top: meterCounterUnitBox.bottom
+            top: meterCounterTopBox.bottom
             topMargin: Design.mediumMargin
             left: parent.left
             leftMargin: Design.mediumMargin
         }
-        text: "Send METER_COUNTER_STATUS_IND "
+        Text {
+            text: "Is lateral:"
+        }
+
+        CheckBox {
+            id: isMeterCounterLateral
+        }
+
+        Button {
+            id: updateMeterCounterBtn
+            text: "Send METER_COUNTER_STATUS_IND "
+            enabled: connectedToServer
+            background: Rectangle {
+                color: Design.defaultButtonColor
+            }
+            onClicked: sendMeterCounterStatusIndClicked()
+        }
+    }
+
+    GridLayout {
+        id: inclinationBox
+        columns: 3
+        anchors {
+            top: meterCounterBottomBox.bottom
+            topMargin: Design.mediuMargin
+            left: parent.left
+            leftMargin: Design.mediumMargin
+            right: parent.right
+            rightMargin: Design.mediumMargin
+        }
+
+        Text {
+            text: "Inclination:"
+        }
+        TextField {
+            id:	inclinationValue
+            Layout.fillWidth: true
+            selectByMouse: true
+            validator: RegExpValidator {
+                regExp: /^[0-9]+([,.][0-9])?[0-9]*$/
+            }
+
+        }
+        ComboBox {
+            model: ListModel {
+                ListElement { text: "rad" }
+                ListElement { text: "deg" }
+            }
+            onCurrentIndexChanged: {
+                inclinationUnit = (currentIndex === 0 ? "rad" : "deg")
+            }
+        }
+    }
+    Button {
+        id: sendInclinationBtn
+        text: "Send INCLINATION_VALUE_STATUS_IND"
+        anchors {
+            top: inclinationBox.bottom
+            topMargin: Design.mediumMargin
+            left: parent.left
+            leftMargin: Design.mediumMargin
+        }
         enabled: connectedToServer
         background: Rectangle {
             color: Design.defaultButtonColor
         }
-        onClicked: sendMeterCounterStatusIndClicked()
+        onClicked: sendInclinationClicked()
     }
+
+
+
 }

@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 
 import CommonItems 1.0
 import design 1.0
+import io.qt.PluginLoader 1.0
 
 Window {
     id: window
@@ -29,6 +30,15 @@ Window {
         }
     }
 
+    Component
+    {
+        id: newTabButton
+        TabButton {
+            text: "dummy"
+            width: 150
+        }
+    }
+
     TabBar
     {
         anchors.top: parent.top
@@ -38,29 +48,35 @@ Window {
         TabButton
         {
             text: "ProTouch API"
-            width: 200
+            width: 150
         }
         TabButton
         {
             text: "Dynamic GUI"
-            width: 200
+            width: 150
         }
         TabButton
         {
             text: "UDP Video"
-            width: 200
+            width: 150
+        }
+
+        function addEntry(name)
+        {
+            newTabButton.createObject(bar, {"text": name});
         }
     }
 
     StackLayout
     {
+        id: layout
         anchors.top: bar.bottom
         currentIndex: bar.currentIndex
         Item
         {
             PtApiTab
             {
-
+                id: ptApiTab
             }
         }
         Item
@@ -78,11 +94,32 @@ Window {
             }
         }
 
+        function addEntry(entry, controller)
+        {
+            entry.createObject(layout, {"controller": controller});
+        }
     }
 
     Version {
+        id: gitRevision
         anchors.right: window.contentItem.right
         anchors.bottom: window.contentItem.bottom
         anchors.rightMargin: 3
+    }
+
+    PluginLoader
+    {
+        id: pluginLoader
+    }
+
+    Text {
+        anchors.right: window.contentItem.right
+        anchors.bottom: gitRevision.top
+        anchors.rightMargin: 3
+        text: "Api ver: 2"
+    }
+
+    Component.onCompleted: {
+        pluginLoader.addPlugins(bar, layout, ptApiTab.msgGen);
     }
 }

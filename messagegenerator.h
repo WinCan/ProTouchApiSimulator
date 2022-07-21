@@ -38,7 +38,8 @@ public:
     Q_INVOKABLE void connectToHost(const QString& ip = "127.0.0.1", const QString& port = "8082");
     Q_INVOKABLE void disconnectFromHost();
 
-    Q_INVOKABLE void sendMeterCounterValue(const QString& val, const QString& unit);
+    Q_INVOKABLE void sendMeterCounterValue(const QString& val, const QString& unit, bool isLateral);
+    Q_INVOKABLE void sendInclinationValue(const QString& value, const QString& unit);
     Q_INVOKABLE void sendStartVideoStreaming(const QString& port);
     Q_INVOKABLE void sendPerformVideoAction();
     Q_INVOKABLE void sendObjectValue(const QString& obj, const QString& val);
@@ -54,6 +55,8 @@ public:
                                         int visibleTime,
                                         const QString& textColor,
                                         const QString& backColor);
+
+    Q_INVOKABLE void sendMessage(const QString& msg);
 
     inline bool connected() { return m_isConnected; }
 
@@ -74,16 +77,18 @@ signals:
     void connectionChanged();
     void ignoreMessageChanged();
     void msgReceived(const QString& message);
+    void rawMsgReceived(const QString& message);
 
 public slots:
     void onMessageReceived(const QString& message);
 
 private:
     void sendControlMessage(const QString& msgName, MessageId msgId);
+    void sendCurrentVersion();
 
     QJsonObject createHeader(const QString& msgName, const QString& msgType, MessageId messageId);
     QJsonObject createObjectStatusIndPayload(const QString& obj, const QString& val);
-    QJsonObject createMeterCounterStatusIndPayload(QString val, const QString& unit);
+    QJsonObject createMeterCounterStatusIndPayload(QString val, const QString& unit, bool isLateral);
     QJsonObject createStartVideoStreamingPayload(int port) const;
     QVariant getValueForObject(const QString& obj, const QString& val);
     QJsonObject createControlRespPayload();
