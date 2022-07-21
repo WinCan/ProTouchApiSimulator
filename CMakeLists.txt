@@ -2,13 +2,13 @@ project(ProTouchApiSimulator)
 cmake_minimum_required(VERSION 3.12.0)
 
 set(HEADERS
-        PluginLoader.h
-        messagegenerator.h
+	PluginLoader.h
+	messagegenerator.h
 	tcpclient.h)
 	
 	
 set(SOURCES
-        PluginLoader.cpp
+	PluginLoader.cpp
 	messagegenerator.cpp
 	tcpclient.cpp)
 

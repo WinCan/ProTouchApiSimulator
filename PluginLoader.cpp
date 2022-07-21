@@ -21,7 +21,7 @@ void PluginLoader::addPlugins(QObject* tabBar, QObject* stackLayout, QObject* ms
 
         if(not QFile::exists(plugin + "/resources.rcc"))
         {
-        continue;
+            continue;
         }
 
         QLibrary lib{plugin + "/lib"};
