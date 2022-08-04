@@ -5,6 +5,11 @@
 #include <QResource>
 #include <QCoreApplication>
 #include <QQmlEngine>
+#include <QtGlobal>
+
+#ifdef Q_OS_WINDOWS
+    #include "windows.h"
+#endif
 
 void PluginLoader::addPlugins(QObject* tabBar, QObject* stackLayout, QObject* msgGen)
 {
@@ -24,11 +29,15 @@ void PluginLoader::addPlugins(QObject* tabBar, QObject* stackLayout, QObject* ms
             continue;
         }
 
+#ifdef Q_OS_WINDOWS
+        AddDllDirectory(plugin.toStdWString().c_str());
+#endif
         QLibrary lib{plugin + "/lib"};
         lib.load();
         QResource::registerResource(plugin + "/resources.rcc");
 
         QString name = reinterpret_cast<const char*(*)()>(lib.resolve("getPluginName"))();
+
         int requiredApiVersion = reinterpret_cast<int(*)()>(lib.resolve("getRequiredApiVersion"))();
 
         if(requiredApiVersion > apiVersion)
