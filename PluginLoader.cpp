@@ -8,7 +8,7 @@
 #include <QtGlobal>
 
 #ifdef Q_OS_WINDOWS
-    #include "windows.h"
+    #include "libloaderapi.h"
 #endif
 
 void PluginLoader::addPlugins(QObject* tabBar, QObject* stackLayout, QObject* msgGen)
@@ -30,7 +30,8 @@ void PluginLoader::addPlugins(QObject* tabBar, QObject* stackLayout, QObject* ms
         }
 
 #ifdef Q_OS_WINDOWS
-        AddDllDirectory(plugin.toStdWString().c_str());
+        const auto directoryCookie = AddDllDirectory(plugin.toStdWString().c_str());
+        SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
 #endif
         QLibrary lib{plugin + "/lib"};
         lib.load();
@@ -64,5 +65,9 @@ void PluginLoader::addPlugins(QObject* tabBar, QObject* stackLayout, QObject* ms
 
         connect(controller, SIGNAL(sendMessageSignal(const QString&)),
         msgGen, SLOT(sendMessage(const QString&)));
+
+#ifdef Q_OS_WINDOWS
+       RemoveDllDirectory(directoryCookie);
+#endif
     }
 }
