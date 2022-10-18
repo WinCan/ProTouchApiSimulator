@@ -30,5 +30,6 @@ private:
     std::unique_ptr<QTcpSocket> m_socket;
     QString m_host;
     quint32 m_port;
+    QString m_buffer;
 };
 

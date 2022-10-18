@@ -14,8 +14,17 @@ TcpClient::TcpClient(const QString& host, quint32 port)
     QObject::connect(m_socket.get(), &QTcpSocket::connected, this, &TcpClient::connected);
     QObject::connect(m_socket.get(), &QTcpSocket::disconnected, this, &TcpClient::disconnected);
     QObject::connect(m_socket.get(), &QTcpSocket::readyRead, this, [this]() {
-        auto msg = m_socket->readAll();
-        emit messageReceived(msg);
+        m_buffer.append(m_socket->readAll());
+        auto messages = m_buffer.split("\n");
+        if(not messages.empty())
+        {
+            m_buffer = messages.back();
+            messages.pop_back();
+            for(auto& message : messages)
+            {
+                emit messageReceived(message);
+            }
+        }
     });
 }
 

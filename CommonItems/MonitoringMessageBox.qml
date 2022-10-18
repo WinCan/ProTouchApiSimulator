@@ -10,15 +10,13 @@ Rectangle {
     property bool connectedToServer
     property alias object: object.text
     property alias value: value.text
-    property alias meterCounterValue: meterCounterValue.text
-    property alias inclinationValue: inclinationValue.text
-    property bool isMeterCounterLateral: isMeterCounterLateral.checked
     property string meterCounterUnit
     property string inclinationUnit
 
     signal sendObjectStatusIndClicked
     signal sendMeterCounterStatusIndClicked
     signal sendInclinationClicked
+    signal sendMonitoringMessage(var messageName, var payload)
 
     anchors.leftMargin: Design.bigMargin
     anchors.topMargin: Design.bigMargin
@@ -40,163 +38,210 @@ Rectangle {
         font.pointSize: Design.fontSize
     }
 
-    GridLayout {
-        id: updateGrid
-        columns: 2
-        rowSpacing: Design.smallMargin
-        columnSpacing: Design.smallMargin
-        anchors {
-            top: updateTitle.bottom
-            topMargin: Design.mediumMargin
-            left: parent.left
-            leftMargin: Design.mediumMargin
-            right: parent.right
-            rightMargin: Design.mediumMargin
-        }
-
-        Label { text: "Object:" }
-        TextField {
-            id: object
-            selectByMouse: true
-        }
-
-        Label { text: "Value:"}
-        TextField {
-            id: value
-            selectByMouse: true
-        }
-    }
-
     Button {
-        id: updateBtn
-        anchors {
-            top: updateGrid.bottom
-            topMargin: Design.mediumMargin
-            left: parent.left
-            leftMargin: Design.mediumMargin
+        id: sendMonitoringMessageButton
+        anchors.top: updateTitle.bottom
+        anchors.topMargin: Design.mediumMargin
+        anchors.left: parent.left
+        anchors.leftMargin: Design.mediumMargin
+
+        width: 75
+        text: "SEND"
+
+        onClicked: {
+            sendMonitoringMessage(messageName.currentText, payloadLayout.currentChildren.getPayload())
         }
-        text: "Send OBJECT_STATUS_IND "
-        enabled: connectedToServer
-        background: Rectangle {
-            color: Design.defaultButtonColor
-        }
-        onClicked: sendObjectStatusIndClicked()
     }
 
-    GridLayout {
-        id: meterCounterTopBox
-        columns: 3
-        rowSpacing: Design.smallMargin
-        columnSpacing: Design.smallMargin
+    ComboBox
+    {
+        anchors.topMargin: Design.mediumMargin
+        anchors.top: updateTitle.bottom
+        anchors.left: sendMonitoringMessageButton.right
+        anchors.leftMargin: Design.mediumMargin
+        anchors.right: parent.right
+        anchors.rightMargin: Design.mediumMargin
+
+        id: messageName
+        model: ["OBJECT_STATUS_IND", "METER_COUNTER_STATUS_IND", "INCLINATION_VALUE_STATUS_IND", "DYNAMIC_UI_VISIBILITY_IND", "SHOW_NOTIFICATION_IND"]
+    }
+
+
+    StackLayout
+    {
         anchors {
-            top: updateBtn.bottom
+            top: messageName.bottom
             topMargin: Design.mediumMargin
             left: parent.left
             leftMargin: Design.mediumMargin
             right: parent.right
             rightMargin: Design.mediumMargin
         }
+        height: children[currentIndex].height
+        currentIndex: messageName.currentIndex
+        property var currentChildren: children[currentIndex]
+        id: payloadLayout
+        Item {
+            GridLayout {
+                id: updateGrid
+                columns: 2
+                rowSpacing: Design.smallMargin
+                columnSpacing: Design.smallMargin
+                Label { text: "Object:" }
+                TextField {
+                    id: object
+                    selectByMouse: true
+                }
 
-
-        Label { text: "Meter Counter:"}
-        TextField {
-            id: meterCounterValue
-            Layout.fillWidth: true
-            selectByMouse: true
-            validator: RegExpValidator {
-                regExp: /^[0-9]+([,.][0-9])?[0-9]*$/
+                Label { text: "Value:"}
+                TextField {
+                    id: value
+                    selectByMouse: true
+                }
             }
 
+            function getTypedValue()
+            {
+                const isOneOf = (arr)=>arr.some(type=>object.text.toLowerCase().includes(type))
+
+                if(isOneOf(["label", "text"]))
+                {
+                    return value.text
+                }
+                if(isOneOf(["spinbox", "levelindicator", "slider"]))
+                {
+                    return parseFloat(value.text)
+                }
+                if(isOneOf(["switch"]))
+                {
+                    return value.text === "true"
+                }
+                console.log("does not know how to treat value of " + object.text + ", treating as string")
+                return value.text
+            }
+
+            function getPayload()
+            {
+                return {
+                    "object": object.text,
+                    "value": getTypedValue()
+                }
+            }
         }
-        ComboBox {
-            model: ListModel {
-                ListElement { text: "meter" }
-                ListElement { text: "feet" }
+
+        Item {
+            GridLayout {
+                id: meterCounterTopBox
+                columns: 2
+                rowSpacing: Design.smallMargin
+                columnSpacing: Design.smallMargin
+
+                TextField {
+                    id: meterCounterValue
+                    Layout.preferredWidth: 100
+                    selectByMouse: true
+                    validator: RegExpValidator {
+                        regExp: /^-?[0-9]+([,.][0-9])?[0-9]*$/
+                    }
+
+                }
+                ComboBox {
+                    model: ListModel {
+                        ListElement { text: "meter" }
+                        ListElement { text: "feet" }
+                    }
+                    id: unitComboBox
+                }
+                Text {
+                    text: "Is lateral:"
+                }
+
+                CheckBox {
+                    id: isMeterCounterLateral
+                }
             }
-            onCurrentIndexChanged: {
-                meterCounterUnit = (currentIndex === 0 ? "meter" : "feet")
+
+            function getPayload() {
+                return {
+                    "value": parseFloat(meterCounterValue.text),
+                    "unit": unitComboBox.currentText,
+                    "isLateral": isMeterCounterLateral.checked
+                }
+            }
+        }
+
+        Item {
+
+            GridLayout {
+                id: inclinationBox
+                columns: 2
+                rowSpacing: Design.smallMargin
+                columnSpacing: Design.smallMargin
+
+                TextField {
+                    id:	inclinationValue
+                    Layout.preferredWidth: 100
+                    selectByMouse: true
+                    validator: RegExpValidator {
+                    regExp: /^-?[0-9]+([,.][0-9])?[0-9]*$/
+                    }
+
+                }
+                ComboBox {
+                    id: inclinationUnit
+                    model: ["rad", "deg", "percent"]
+                }
+            }
+
+            function getPayload() {
+                return {
+                    "value": parseFloat(inclinationValue),
+                    "unit": inclinationUnit.currentText
+                }
+            }
+        }
+
+        Item {
+            RowLayout {
+                spacing: Design.smallMargin
+                id: dynamicUiVisibilityBox
+
+                Text {
+                    text: "Is visible: "
+                }
+
+                CheckBox {
+                    id: isUiVisible
+                }
+            }
+
+            function getPayload() {
+                return {
+                    "visible": isUiVisible.checked
+                }
+            }
+        }
+
+        Item {
+            ColumnLayout {
+                spacing: Design.smallMargin
+                TextField {
+                    id: notificationText
+                    Layout.fillWidth: true
+                    selectByMouse: true
+                    }
+
+                ComboBox {
+                    id: notificationType
+                    model: ["success", "info", "warning", "error", "errorWithConfirm"]
+                }
+            }
+            function getPayload() {
+                return {
+                    "type": notificationType.currentText,
+                    "text": notificationText.text
+                }
             }
         }
     }
-
-    GridLayout {
-        id: meterCounterBottomBox
-        columns: 3
-        anchors {
-            top: meterCounterTopBox.bottom
-            topMargin: Design.mediumMargin
-            left: parent.left
-            leftMargin: Design.mediumMargin
-        }
-        Text {
-            text: "Is lateral:"
-        }
-
-        CheckBox {
-            id: isMeterCounterLateral
-        }
-
-        Button {
-            id: updateMeterCounterBtn
-            text: "Send METER_COUNTER_STATUS_IND "
-            enabled: connectedToServer
-            background: Rectangle {
-                color: Design.defaultButtonColor
-            }
-            onClicked: sendMeterCounterStatusIndClicked()
-        }
-    }
-
-    GridLayout {
-        id: inclinationBox
-        columns: 3
-        anchors {
-            top: meterCounterBottomBox.bottom
-            topMargin: Design.mediuMargin
-            left: parent.left
-            leftMargin: Design.mediumMargin
-            right: parent.right
-            rightMargin: Design.mediumMargin
-        }
-
-        Text {
-            text: "Inclination:"
-        }
-        TextField {
-            id:	inclinationValue
-            Layout.fillWidth: true
-            selectByMouse: true
-            validator: RegExpValidator {
-                regExp: /^[0-9]+([,.][0-9])?[0-9]*$/
-            }
-
-        }
-        ComboBox {
-            model: ListModel {
-                ListElement { text: "rad" }
-                ListElement { text: "deg" }
-            }
-            onCurrentIndexChanged: {
-                inclinationUnit = (currentIndex === 0 ? "rad" : "deg")
-            }
-        }
-    }
-    Button {
-        id: sendInclinationBtn
-        text: "Send INCLINATION_VALUE_STATUS_IND"
-        anchors {
-            top: inclinationBox.bottom
-            topMargin: Design.mediumMargin
-            left: parent.left
-            leftMargin: Design.mediumMargin
-        }
-        enabled: connectedToServer
-        background: Rectangle {
-            color: Design.defaultButtonColor
-        }
-        onClicked: sendInclinationClicked()
-    }
-
-
-
 }

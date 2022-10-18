@@ -75,6 +75,16 @@ R"AAAA([
     {
         "id": "meterCounter1",
         "type": "MeterCounter"
+    },
+    {
+        "id": "slider1",
+        "type": "Slider",
+        "properties": {
+            "value": 10,
+            "from": 0,
+            "to": 25,
+            "step": 5
+        }
     }
 ])AAAA");
     return msg;
@@ -113,14 +123,23 @@ R"AAAA([
         "id": "spinBox2",
         "type": "Spinbox",
         "properties": {
-            "value": 5
+            "value": 5,
+            "from": -25,
+            "to": 25,
+            "stepSize": 5,
+            "suffix": ""
         }
     },
     {
         "id": "levelIndicator2",
         "type": "LevelIndicator",
         "properties": {
-            "chargeLevel": 25
+            "chargeLevel": 1,
+            "from": 0,
+            "to": 10,
+            "redYellowThreshold": 2,
+            "yellowGreenThreshold": 8,
+            "suffix": " bar(s)"
         }
     },
     {
@@ -128,6 +147,14 @@ R"AAAA([
         "type": "Switch",
         "properties": {
             "status": true
+        }
+    },
+    {
+        "id": "dropdown1",
+        "type": "Dropdown",
+        "properties": {
+            "model": ["one", "two", "three"],
+            "index": 2
         }
     }
 ])AAAA");
