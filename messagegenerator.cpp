@@ -71,14 +71,6 @@ void MessageGenerator::onMessageReceived(const QString& message)
             qDebug() << "undefinded message name: " << msgName;
         }
     }
-    else if (msgType == VIDEO)
-    {
-        //TODO handle ip from ProTouchApi if needed
-    }
-    else
-    {
-        qDebug() << "undefinded message type: " << msgType;
-    }
 }
 
 void MessageGenerator::updateErrorCode(int errorCode)
@@ -172,6 +164,13 @@ void MessageGenerator::sendObjectValue(const QString& obj, const QString& val)
     m_client->sendMessage(createMessage(createHeader(OBJECT_STATUS_IND, MONITORING, MESSAGE_ID),
                                         createObjectStatusIndPayload(obj, val)));
 }
+
+void MessageGenerator::sendMonitoringMessage(const QString& messageName, const QVariant& payload)
+{
+    m_client->sendMessage(createMessage(createHeader(messageName, MONITORING, MESSAGE_ID),
+                                        QJsonObject::fromVariantMap(payload.toMap())));
+}
+
 void MessageGenerator::sendCreateFreeText(const QString& text,
                                         int x,
                                         int y,
@@ -188,6 +187,16 @@ void MessageGenerator::sendCreateFreeText(const QString& text,
             {"backColor", backColor}
     }};
     m_client->sendMessage(createMessage(createHeader("CREATE_FREE_TEXT", "OSD", MESSAGE_ID), QJsonObject::fromVariantMap(payload)));
+}
+
+void MessageGenerator::sendSettingInfoReq(const QString& setting)
+{
+    m_client->sendMessage(createMessage(createHeader("SETTING_INFO_REQ", "SETTING", MESSAGE_ID), QJsonObject{{{"setting", setting}}}));
+}
+
+void MessageGenerator::sendSetupMessage(const QString& msg, const QVariant& payload)
+{
+    m_client->sendMessage(createMessage(createHeader(msg, "SETUP", MESSAGE_ID), QJsonObject::fromVariantMap(payload.toMap())));
 }
 
 QByteArray MessageGenerator::createMessage(const QJsonObject& header, const QJsonObject& payload)

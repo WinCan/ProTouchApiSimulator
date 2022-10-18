@@ -56,7 +56,12 @@ public:
                                         const QString& textColor,
                                         const QString& backColor);
 
+    Q_INVOKABLE void sendSettingInfoReq(const QString& setting);
+    Q_INVOKABLE void sendSetupMessage(const QString& msg, const QVariant& payload);
+
     Q_INVOKABLE void sendMessage(const QString& msg);
+
+    Q_INVOKABLE void sendMonitoringMessage(const QString& messageName, const QVariant& payload);
 
     inline bool connected() { return m_isConnected; }
 
