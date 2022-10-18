@@ -165,8 +165,6 @@ void MessageGenerator::sendObjectValue(const QString& obj, const QString& val)
                                         createObjectStatusIndPayload(obj, val)));
 }
 
-#include <iostream>
-
 void MessageGenerator::sendMonitoringMessage(const QString& messageName, const QVariant& payload)
 {
     m_client->sendMessage(createMessage(createHeader(messageName, MONITORING, MESSAGE_ID),
