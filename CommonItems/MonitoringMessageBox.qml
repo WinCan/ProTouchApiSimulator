@@ -195,7 +195,7 @@ Rectangle {
 
             function getPayload() {
                 return {
-                    "value": parseFloat(inclinationValue),
+                    "value": parseFloat(inclinationValue.text),
                     "unit": inclinationUnit.currentText
                 }
             }
