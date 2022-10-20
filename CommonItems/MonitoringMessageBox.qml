@@ -108,7 +108,7 @@ Rectangle {
                 {
                     return value.text
                 }
-                if(isOneOf(["spinbox", "levelindicator", "slider"]))
+                if(isOneOf(["spinbox", "levelindicator", "slider", "dropdown"]))
                 {
                     return parseFloat(value.text)
                 }
