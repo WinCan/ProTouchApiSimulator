@@ -1,5 +1,6 @@
 # ProTouchApiSimulator
 Download the newest release: https://wincan.com/protouch-api-windows
+Documentation webpage: https://cdlabdev.atlassian.net/wiki/spaces/FAQ/pages/3069640705/18+ProTouch+API+EN
 
 This simple application allows simulate client side. 
 1. On “Connection box” you can connect to server, by default connection is established to **localhost** (127.0.0.1) on port **8095** when clicked on “Connect to server”.
