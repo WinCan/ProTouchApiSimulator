@@ -12,7 +12,7 @@
 +:refs/(tags/*)
 +:refs/pull/(*/merge)
 -:refs/heads/(teamcity_config)]]></param>
-  <param name="teamcitySshKey" value="wincan-bbot-vx_rsa" />
+  <param name="teamcitySshKey" value="wincanbbotvx_ed25519" />
   <param name="url" value="git@github.com:WinCan/ProTouchApiSimulator.git" />
   <param name="useAlternates" value="AUTO" />
   <param name="usernameStyle" value="USERID" />
