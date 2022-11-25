@@ -26,7 +26,7 @@ Window {
         anchors.top: parent.top
         anchors.right: parent.right
         onClicked: {
-            Qt.openUrlExternally("https://github.com/WinCan/ProTouchApiSimulator/raw/main/ProTouch%20API%20Documentation.pdf")
+            Qt.openUrlExternally("https://cdlabdev.atlassian.net/wiki/spaces/FAQ/pages/3069640705/18+ProTouch+API+EN")
         }
     }
 
