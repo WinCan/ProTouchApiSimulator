@@ -7,7 +7,6 @@
       <option name="artifactRules" value="publication&#xA;-:__pycache__" />
     </options>
     <disabled-settings>
-      <setting-ref ref="RUNNER_1" />
       <setting-ref ref="RUNNER_120" />
       <setting-ref ref="RUNNER_2" />
       <setting-ref ref="TRIGGER_2" />
