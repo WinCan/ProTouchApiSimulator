@@ -9,7 +9,7 @@ jobs:
     steps:
     - name: Run Validation Jenkins Job
       run: |
-        $BRANCH_NAME = "${{ github.ref_name }}"
+        $BRANCH_NAME = "${{ github.head_ref }}"
         $url_windows = "https://services.beta.wincan.com/jenkins/job/Windows%20ProTouchApiSimulator/buildWithParameters?token=K1tUySyEPD84PjFANsbpCa&ValidationBuild=true&BranchName=" + $BRANCH_NAME
         curl -X POST $url_windows -u jenkins-triggers:${{secrets.JENKINS_KEY}} -k
         $url_linux = "https://services.beta.wincan.com/jenkins/job/Linux%20ProTouchApiSimulator/buildWithParameters?token=K1tUySyEPD84PjFANsbpCa&ValidationBuild=true&BranchName=" + $BRANCH_NAME
