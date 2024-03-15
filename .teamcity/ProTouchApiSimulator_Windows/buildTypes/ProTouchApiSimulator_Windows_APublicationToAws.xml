@@ -4,7 +4,7 @@
   <description>uploading packages to AWS</description>
   <settings>
     <options>
-      <option name="artifactRules" value="publication&#xA;-:__pycache__&#xA;aws_secret_access_key.txt&#xA;AWS_KEY.txt&#xA;aes_password.txt" />
+      <option name="artifactRules" value="publication&#xA;-:__pycache__" />
     </options>
     <disabled-settings>
       <setting-ref ref="RUNNER_1" />
