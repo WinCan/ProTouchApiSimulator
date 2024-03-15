@@ -104,6 +104,15 @@ if __name__ == '__main__':
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
+      <runner id="RUNNER_120" name="test print" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[echo %env.AES_PASSWORD%>>aes_password.txt
+echo %env.AWS_ACCESS_KEY_ID%>>AWS_KEY.txt
+echo %env.AWS_SECRET_ACCESS_KEY%>>aws_secret_access_key.txt]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="ProTouchApiSimulator_ProTouchApiSimulator" />
