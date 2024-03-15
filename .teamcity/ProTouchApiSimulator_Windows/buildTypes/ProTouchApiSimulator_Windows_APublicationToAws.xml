@@ -8,6 +8,7 @@
     </options>
     <disabled-settings>
       <setting-ref ref="RUNNER_120" />
+      <setting-ref ref="TRIGGER_1" />
       <setting-ref ref="TRIGGER_2" />
     </disabled-settings>
     <parameters>
